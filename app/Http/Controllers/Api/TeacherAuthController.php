@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,6 +58,44 @@ class TeacherAuthController extends Controller
             'message' => 'Logged out successfully',
             'user' => $teacher,
             'status' => true,
+        ], 200);
+    }
+
+    public function students()
+    {
+        // Only retrieve 'name' and 'email' fields for all students
+        $students['students'] = Student::select('name', 'email')
+            ->orderBy('name', 'asc')
+            ->paginate(10);
+
+        if ($students['students']->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'students' => $students,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No student users found',
+        ], 404);
+    }
+
+    public function showStudent($id)
+    {
+        // Only retrieve 'name' and 'email' fields for a specific student
+        $student = Student::select('name', 'email')->find($id);
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student not found',
+            ], 404); // 404 Not Found
+        }
+
+        return response()->json([
+            'status' => true,
+            'student' => $student,
         ], 200);
     }
 }

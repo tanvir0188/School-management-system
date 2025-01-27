@@ -17,4 +17,9 @@ class Student extends Model
         'student_id',
         'password',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(StudentProfile::class);
+    }
 }

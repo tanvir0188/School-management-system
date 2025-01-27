@@ -149,4 +149,64 @@ class AdminAuthController extends Controller
             'status' => true,
         ], 200);
     }
+    public function teachers()
+    {
+        $teachers['teachers'] = Teacher::orderBy('name', 'asc')->paginate(10);
+        if ($teachers['teachers']->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'teachers' => $teachers,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No teacher users found',
+        ]);
+    }
+    public function showTeacher($id)
+    {
+        $teacher = Teacher::find($id);
+        if (!$teacher) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Teacher not found',
+
+            ], 404); // 404 Not Found
+        }
+        return response()->json([
+            'status' => true,
+            'teacher' => $teacher,
+
+        ], 200);
+    }
+    public function students()
+    {
+        $students['students'] = Student::orderBy('name', 'asc')->paginate(10);
+        if ($students['students']->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'students' => $students,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No student users found',
+        ], 404);
+    }
+    public function showStudent($id)
+    {
+        $student = Student::find($id);
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student not found',
+            ], 404); // 404 Not Found
+        }
+        return response()->json([
+            'status' => true,
+            'student' => $student,
+        ], 200);
+    }
 }
