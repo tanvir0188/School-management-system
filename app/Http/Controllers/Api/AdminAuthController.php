@@ -209,4 +209,47 @@ class AdminAuthController extends Controller
             'student' => $student,
         ], 200);
     }
+    public function deleteStudent($id)
+    {
+        $student = Student::find($id);
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student not found',
+            ], 404); // 404 Not Found
+        }
+
+        // Delete the student's profile photo if it exists
+        if ($student->profile && $student->profile->photo) {
+            $photoPath = public_path('students/' . $student->profile->photo); // here profile is the method in Student model
+            if (file_exists($photoPath)) {
+                unlink($photoPath); // Delete the photo from the public path
+            }
+        }
+
+        // Delete the student's profile and the student record
+        $student->profile()->delete();
+        $student->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Student and associated profile deleted successfully',
+        ], 200);
+    }
+
+    public function deleteTeacher($id)
+    {
+        $teacher = Teacher::find($id);
+        if (!$teacher) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Teacher not found',
+            ], 404); // 404 Not Found
+        }
+        $teacher->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Teacher deleted successfully',
+        ], 200);
+    }
 }
