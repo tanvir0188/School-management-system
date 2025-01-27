@@ -10,6 +10,7 @@ class Student extends Model
 {
     //
     use HasFactory, HasApiTokens;
+
     protected $fillable = [
         'name',
         'email',

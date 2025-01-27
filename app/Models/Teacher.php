@@ -10,7 +10,7 @@ class Teacher extends Model
 {
     //
     use HasFactory, HasApiTokens;
-    protected $table = 'teachers';
+
     protected $fillable = [
         'name',
         'email',
