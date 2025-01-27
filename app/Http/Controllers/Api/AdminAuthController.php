@@ -138,4 +138,15 @@ class AdminAuthController extends Controller
         ], 201); // 201 Created
 
     }
+
+    public function logout(Request $request)
+    {
+        $admin = $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully',
+            'admin' => $admin,
+            'status' => true,
+        ], 200);
+    }
 }

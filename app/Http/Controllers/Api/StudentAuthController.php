@@ -45,4 +45,14 @@ class StudentAuthController extends Controller
             'token' => $token,
         ]);
     }
+    public function logout(Request $request)
+    {
+        $student = $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully',
+            'student' => $student,
+            'status' => true,
+        ], 200);
+    }
 }

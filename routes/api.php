@@ -38,6 +38,7 @@ Route::post('/student/login', [StudentAuthController::class, 'login']); // Publi
 
 Route::group(['prefix' => 'student', 'middleware' => 'auth:sanctum:api-student'], function () {
     // Add protected routes for students here
+    Route::post('logout', [StudentAuthController::class, 'logout']);
 });
 
 // Teacher Routes
@@ -45,4 +46,5 @@ Route::post('/teacher/login', [TeacherAuthController::class, 'login']); // Publi
 
 Route::group(['prefix' => 'teacher', 'middleware' => 'auth:sanctum:api-teacher'], function () {
     // Add protected routes for teachers here
+    Route::post('logout', [TeacherAuthController::class, 'logout']); // Protected
 });
