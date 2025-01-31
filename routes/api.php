@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AdminAuthController;
 use App\Http\Controllers\Api\StudentAuthController;
 use App\Http\Controllers\Api\StudentProfileController;
 use App\Http\Controllers\Api\TeacherAuthController;
+use App\Http\Controllers\TeacherProfileController;
 use App\Models\StudentProfile;
 
 // Route::get('/user', function (Request $request) {
@@ -29,6 +30,11 @@ use App\Models\StudentProfile;
 // Admin Routes
 Route::post('/admin/login', [AdminAuthController::class, 'login']); // Public
 Route::post('/admin/register', [AdminAuthController::class, 'register']); // Public
+Route::get('teacherProfile/index', [TeacherProfileController::class, 'index']);
+Route::get('studentProfile/index', [StudentProfileController::class, 'index']);
+Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
+Route::get('teacherProfile/{id}', [TeacherProfileController::class, 'show']);
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
     Route::post('/register/student', [AdminAuthController::class, 'studentRegister']);
@@ -39,7 +45,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::delete('/student/{id}', [AdminAuthController::class, 'deleteStudent']);
     Route::get('/student/index', [AdminAuthController::class, 'students']);
     Route::get('/student/{id}', [AdminAuthController::class, 'showStudent']);
-    Route::get('studentProfile/index', [StudentProfileController::class, 'index']);
     Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
 });
 
@@ -50,8 +55,6 @@ Route::group(['prefix' => 'student', 'middleware' => 'auth:sanctum:api-student']
     // Add protected routes for students here
     Route::post('logout', [StudentAuthController::class, 'logout']);
     Route::post('studentProfile/store', [StudentProfileController::class, 'store']);
-    Route::get('studentProfile/index', [StudentProfileController::class, 'index']);
-    Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
     Route::put('studentProfile/{id}', [StudentProfileController::class, 'update']);
 });
 
@@ -63,6 +66,6 @@ Route::group(['prefix' => 'teacher', 'middleware' => 'auth:sanctum:api-teacher']
     Route::post('logout', [TeacherAuthController::class, 'logout']); // Protected
     Route::get('/student/index', [TeacherAuthController::class, 'students']);
     Route::get('/student/{id}', [TeacherAuthController::class, 'showStudent']);
-    Route::post('studentProfile/index', [StudentProfileController::class, 'index']);
-    Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
+    Route::post('teacherProfile/store', [TeacherProfileController::class, 'store']);
+    Route::put('teacherProfile/{id}', [TeacherProfileController::class, 'update']);
 });
