@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AdminAuthController;
-use App\Http\Controllers\Api\StudentAuthController;
-use App\Http\Controllers\Api\StudentProfileController;
-use App\Http\Controllers\Api\TeacherAuthController;
-use App\Http\Controllers\TeacherProfileController;
 use App\Models\StudentProfile;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ClassController;
+use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\TeacherProfileController;
+
+use App\Http\Controllers\Api\StudentAuthController;
+use App\Http\Controllers\Api\TeacherAuthController;
+use App\Http\Controllers\Api\StudentProfileController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -46,6 +49,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::get('/student/index', [AdminAuthController::class, 'students']);
     Route::get('/student/{id}', [AdminAuthController::class, 'showStudent']);
     Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
+
+    Route::get('class/index', [ClassController::class, 'index']);
+    Route::post('class/store', [ClassController::class, 'store']);
+    Route::delete('class/{id}', [ClassController::class, 'destroy']);
+
+    Route::get('section/index', [SectionController::class, 'index']);
+    Route::post('section/store', [SectionController::class, 'store']);
+    Route::put('section/update/{id}', [SectionController::class, 'update']);
+    Route::delete('section/{id}', [SectionController::class, 'destroy']);
 });
 
 // Student Routes

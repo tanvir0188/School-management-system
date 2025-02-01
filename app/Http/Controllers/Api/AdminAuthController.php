@@ -19,7 +19,7 @@ class AdminAuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:admins',
             'password' => 'required|min:8',
-            'confirm_password' => 'required|same:password',
+            // 'confirm_password' => 'required|same:password',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()->all()], 422);

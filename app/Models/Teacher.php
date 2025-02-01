@@ -17,4 +17,8 @@ class Teacher extends Model
         'password',
 
     ];
+    public function section()
+    {
+        return $this->hasMany(Section::class, 'teacher_id', 'id'); //id of teachers table will be matched against teacher_id of section table
+    }
 }
