@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
 
             $table->date('exam_date');
+            $table->float('full_marks');
 
             $table->timestamps();
         });

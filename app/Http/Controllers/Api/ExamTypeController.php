@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Exam;
 use App\Models\ExamType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -48,6 +49,7 @@ class ExamTypeController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Exam type created successfully',
+                'examType' => $examType
             ], 201);
         } catch (\Exception $th) {
             return response()->json([
@@ -124,5 +126,37 @@ class ExamTypeController extends Controller
                 'error' => $th->getMessage(),
             ], 500);
         }
+    }
+    public function show($id)
+    {
+        $examType = ExamType::find($id);
+        if ($examType) {
+            try {
+                $examsByTypes = Exam::where('exam_type_id', $id)
+                    ->orderBy('exam_date')
+                    ->take(5) // OR ->limit(5)
+                    ->get();
+                if ($examsByTypes->count() > 0) {
+                    return response()->json([
+                        'status' => true,
+                        'examsByTypes' => $examsByTypes,
+                    ], 200);
+                }
+                return response()->json([
+                    'status' => false,
+                    'message' => "Couldn't find any Exam for " . $examType->name,
+                ], 404);
+            } catch (\Exception $th) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Failed to retrieve exams',
+                    'error' => $th->getMessage(),
+                ], 500);
+            }
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No such exam type found'
+        ], 404);
     }
 }

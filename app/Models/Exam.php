@@ -12,6 +12,7 @@ class Exam extends Model
         'subject',
         'class_id',
         'exam_date',
+        'full_marks'
     ];
 
     public function exam_type()

@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->string('marks');
             $table->timestamps();
+
+            $table->unique(['exam_id', 'student_id']);
         });
     }
 

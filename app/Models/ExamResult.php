@@ -12,6 +12,7 @@ class ExamResult extends Model
         'student_id',
         'marks',
     ];
+    protected $table = 'exams_results';
     public function exam()
     {
         return $this->belongsTo(Exam::class, 'exam_id');

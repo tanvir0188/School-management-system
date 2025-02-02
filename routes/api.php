@@ -3,17 +3,19 @@
 use Illuminate\Http\Request;
 use App\Models\StudentProfile;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ExamController;
 use App\Http\Controllers\Api\ClassController;
-use App\Http\Controllers\Api\AdminAuthController;
-use App\Http\Controllers\Api\ExamTypeController;
 use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\SectionController;
-use App\Http\Controllers\Api\SectionNoticeController;
-use App\Http\Controllers\Api\TeacherProfileController;
+use App\Http\Controllers\Api\ExamTypeController;
+use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\ExamResultController;
 
 use App\Http\Controllers\Api\StudentAuthController;
 use App\Http\Controllers\Api\TeacherAuthController;
+use App\Http\Controllers\Api\SectionNoticeController;
 use App\Http\Controllers\Api\StudentProfileController;
+use App\Http\Controllers\Api\TeacherProfileController;
 
 // Admin Routes
 Route::post('/admin/login', [AdminAuthController::class, 'login']); // Public
@@ -29,6 +31,13 @@ Route::get('section-notice', [SectionNoticeController::class, 'index']);
 Route::get('section-notice/{id}', [SectionNoticeController::class, 'show']);
 
 Route::get('exam-type', [ExamTypeController::class, 'index']);
+Route::get('exam-type/{id}', [ExamTypeController::class, 'show']);
+
+Route::get('exam', [ExamController::class, 'index']);
+Route::get('exam/{id}', [ExamController::class, 'show']);
+
+Route::get('exam-result', [ExamResultController::class, 'index']);
+Route::get('exam-result/{id}', [ExamResultController::class, 'show']);
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
@@ -59,6 +68,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::post('exam-type', [ExamTypeController::class, 'store']);
     Route::put('exam-type/{id}', [ExamTypeController::class, 'update']);
     Route::delete('exam-type/{id}', [ExamTypeController::class, 'destroy']);
+
+    Route::post('exam', [ExamController::class, 'store']);
+    Route::put('exam/{id}', [ExamController::class, 'update']);
+    Route::delete('exam/{id}', [ExamController::class, 'destroy']);
+
+    Route::post('exam-result', [ExamResultController::class, 'store']);
+    Route::put('exam-result/{id}', [ExamResultController::class, 'update']);
+    Route::delete('exam-result/{id}', [ExamResultController::class, 'destroy']);
 });
 
 // Student Routes
