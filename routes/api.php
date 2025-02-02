@@ -5,31 +5,15 @@ use App\Models\StudentProfile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ClassController;
 use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\SectionNoticeController;
 use App\Http\Controllers\Api\TeacherProfileController;
 
 use App\Http\Controllers\Api\StudentAuthController;
 use App\Http\Controllers\Api\TeacherAuthController;
 use App\Http\Controllers\Api\StudentProfileController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-// Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
-//     Route::post('login', [AdminAuthController::class, 'login']);
-//     Route::post('register', [AdminAuthController::class, 'register']);
-
-//     Route::post('/register/student', [AdminAuthController::class, 'studentRegister']);
-//     Route::post('/register/teacher', [AdminAuthController::class, 'teacherRegister']);
-// });
-
-// Route::group(['prefix' => 'student', 'middleware' => 'auth:sanctum:api-student'], function () {
-//     Route::post('login', [StudentAuthController::class, 'login']);
-// });
-
-// Route::group(['prefix' => 'teacher', 'middleware' => 'auth:sanctum:api-teacher'], function () {
-//     Route::post('login', [TeacherAuthController::class, 'login']);
-// });
 // Admin Routes
 Route::post('/admin/login', [AdminAuthController::class, 'login']); // Public
 Route::post('/admin/register', [AdminAuthController::class, 'register']); // Public
@@ -37,6 +21,11 @@ Route::get('teacherProfile/index', [TeacherProfileController::class, 'index']);
 Route::get('studentProfile/index', [StudentProfileController::class, 'index']);
 Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
 Route::get('teacherProfile/{id}', [TeacherProfileController::class, 'show']);
+Route::get('notice', [NoticeController::class, 'index']);
+Route::get('notice/{id}', [NoticeController::class, 'show']);
+
+Route::get('section-notice', [SectionNoticeController::class, 'index']);
+Route::get('section-notice/{id}', [SectionNoticeController::class, 'show']);
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
@@ -58,6 +47,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::post('section/store', [SectionController::class, 'store']);
     Route::put('section/update/{id}', [SectionController::class, 'update']);
     Route::delete('section/{id}', [SectionController::class, 'destroy']);
+
+
+    Route::post('notice', [NoticeController::class, 'store']);
+    Route::put('notice/{id}', [NoticeController::class, 'update']);
+    Route::delete('notice/{id}', [NoticeController::class, 'destroy']);
 });
 
 // Student Routes
@@ -80,4 +74,8 @@ Route::group(['prefix' => 'teacher', 'middleware' => 'auth:sanctum:api-teacher']
     Route::get('/student/{id}', [TeacherAuthController::class, 'showStudent']);
     Route::post('teacherProfile/store', [TeacherProfileController::class, 'store']);
     Route::put('teacherProfile/{id}', [TeacherProfileController::class, 'update']);
+
+    Route::post('section-notice', [SectionNoticeController::class, 'store']);
+    Route::put('section-notice/{id}', [SectionNoticeController::class, 'update']);
+    Route::delete('section-notice/{id}', [SectionNoticeController::class, 'destroy']);
 });

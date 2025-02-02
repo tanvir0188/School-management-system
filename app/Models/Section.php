@@ -26,4 +26,8 @@ class Section extends Model
     {
         return $this->hasMany(Student::class, 'section_id', 'id');
     }
+    public function sectionNotice()
+    {
+        return $this->hasMany(SectionNotice::class, 'sec_id', 'id'); // 
+    }
 }
