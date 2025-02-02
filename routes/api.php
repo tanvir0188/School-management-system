@@ -5,6 +5,7 @@ use App\Models\StudentProfile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ClassController;
 use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\ExamTypeController;
 use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\SectionNoticeController;
@@ -26,6 +27,8 @@ Route::get('notice/{id}', [NoticeController::class, 'show']);
 
 Route::get('section-notice', [SectionNoticeController::class, 'index']);
 Route::get('section-notice/{id}', [SectionNoticeController::class, 'show']);
+
+Route::get('exam-type', [ExamTypeController::class, 'index']);
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
@@ -52,6 +55,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::post('notice', [NoticeController::class, 'store']);
     Route::put('notice/{id}', [NoticeController::class, 'update']);
     Route::delete('notice/{id}', [NoticeController::class, 'destroy']);
+
+    Route::post('exam-type', [ExamTypeController::class, 'store']);
+    Route::put('exam-type/{id}', [ExamTypeController::class, 'update']);
+    Route::delete('exam-type/{id}', [ExamTypeController::class, 'destroy']);
 });
 
 // Student Routes

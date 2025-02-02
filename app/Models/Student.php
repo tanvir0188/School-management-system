@@ -31,4 +31,8 @@ class Student extends Model
     {
         return $this->belongsTo(Section::class, 'sec_id', 'id');
     }
+    public function exam_results()
+    {
+        return $this->hasMany(ExamResult::class, 'student_id', 'id');
+    }
 }
