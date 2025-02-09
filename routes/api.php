@@ -43,6 +43,7 @@ Route::get('exam-result/{id}', [ExamResultController::class, 'show']);
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
     Route::post('/register/student', [AdminAuthController::class, 'studentRegister']);
     Route::post('/register/teacher', [AdminAuthController::class, 'teacherRegister']);
+    Route::post('logout', [AdminAuthController::class, 'logout']);
     Route::get('/teacher/index', [AdminAuthController::class, 'teachers']);
     Route::get('/teacher/{id}', [AdminAuthController::class, 'showTeacher']);
     Route::delete('/teacher/{id}', [AdminAuthController::class, 'deleteTeacher']);

@@ -37,20 +37,17 @@ class AdminAuthController extends Controller
     }
     public function login(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => 'Invalid credentials',
                 'errors' => $validator->errors()->all(),
-            ], 401); // Use 401 Unauthorized status code
+            ], 400);
         }
 
         $admin = Admin::where('email', $request->email)->first();
@@ -59,10 +56,11 @@ class AdminAuthController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Invalid credentials',
-
             ], 401);
         }
 
+
+        // If no token exists, create a new one
         $token = $admin->createToken('AdminToken')->plainTextToken;
 
         return response()->json([
@@ -72,6 +70,7 @@ class AdminAuthController extends Controller
             'token' => $token,
         ]);
     }
+
 
     public function studentRegister(Request $request)
     {
@@ -141,11 +140,10 @@ class AdminAuthController extends Controller
 
     public function logout(Request $request)
     {
-        $admin = $request->user()->tokens()->delete();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'Logged out successfully',
-            'admin' => $admin,
             'status' => true,
         ], 200);
     }
