@@ -36,7 +36,7 @@ class ExamController extends Controller
                 'subject' => 'required|string|max:50',
                 'class_id' => 'required|exists:classes,id', // Fixed space issue
                 'exam_date' => 'required|date_format:Y-m-d',
-                'full_marks' => 'required|numeric'
+                'full_marks' => 'required|numeric|between:5,100',
             ]
         );
 

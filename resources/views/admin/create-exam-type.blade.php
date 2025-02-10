@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Create new class')</title>
+    <title>@yield('title', 'Create exam type')</title>
     <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
     <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
@@ -21,17 +21,17 @@
     @include('components.sidebar')
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
-        @section('breadcrumb', 'Class')
+        @section('breadcrumb', 'Exam type')
 
-        @section('page-title', 'Create New class')
+        @section('page-title', 'Create New exam type')
         @include('components.navbar')
         <div class="container-fluid py-4">
-            <form id="createClass">
+            <form id="createExamType">
                 <div class="form-group">
 
-                    <label for="class">Class name</label>
-                    <input type="number" class="form-control" id="name" aria-describedby="class"
-                        placeholder="Enter class name" required>
+                    <label for="class">Exam type</label>
+                    <input type="text" class="form-control" id="exam-type" aria-describedby="exam-type"
+                        placeholder="Enter exam type" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -51,11 +51,11 @@
     @include('components.check-admin-auth')
     <script>
         $(document).ready(function() {
-            $('#createClass').submit(function(e) {
+            $('#createExamType').submit(function(e) {
                 e.preventDefault();
 
                 
-                let classname = $('#name').val().trim();
+                let examType = $('#exam-type').val().trim();
                 let adminToken = localStorage.getItem("admin_token"); // Retrieve admin token from localStorage
 
                 if (!adminToken) {
@@ -64,20 +64,20 @@
                 }
 
                 $.ajax({
-                    url: "http://127.0.0.1:8000/api/admin/class/store",
+                    url: "http://127.0.0.1:8000/api/admin/exam-type",
                     type: 'POST',
                     headers: {
                         "Authorization": "Bearer " + adminToken // Attach token in the request headers
                     },
                     data: JSON.stringify({
-                        name: classname
+                        name: examType
                     }),
                     contentType: "application/json",
                     dataType: "json",
                     success: function(response) {
                         if (response.status) {
                             toastr.success(response.message);
-                            $('#createClass')[0].reset();
+                            $('#createExamType')[0].reset();
                         } else {
                             toastr.error(response.errors);
                         }
@@ -88,7 +88,7 @@
                             localStorage.removeItem("admin_token"); // Remove invalid token
                             setTimeout(function() {
                                 window.location.href =
-                                "/admin-sign-in"; // Redirect to login page
+                                "/admin/login"; // Redirect to login page
                             }, 2000);
                         } else {
                             let errors = xhr.responseJSON;

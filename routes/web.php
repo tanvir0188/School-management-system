@@ -33,6 +33,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/create-section', function () {
         return view('admin.create-section');
     })->name('create-section');
+    Route::get('/create-exam-type', function () {
+        return view('admin.create-exam-type');
+    })->name('create-exam-type');
+    Route::get('/create-exam', function () {
+        return view('admin.create-exam');
+    })->name('create-exam');
+    Route::get('/create-result', function () {
+        return view('admin.create-result');
+    })->name('create-result');
 });
 
 

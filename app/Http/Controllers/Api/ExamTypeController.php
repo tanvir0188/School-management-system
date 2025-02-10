@@ -13,9 +13,9 @@ class ExamTypeController extends Controller
     //
     public function index()
     {
-        $examTypes['examTypes'] = ExamType::orderBy('name', 'asc')->paginate(5);
+        $examTypes['examTypes'] = ExamType::orderBy('name', 'asc')->get();
 
-        if ($examTypes['examTypes']->total() > 0) {
+        if ($examTypes['examTypes']->count() > 0) {
             return response()->json([
                 'status' => true,
                 'examTypes' => $examTypes,
@@ -38,8 +38,8 @@ class ExamTypeController extends Controller
         if ($examTypeValidator->fails()) {
             return response()->json([
                 'status' => false,
-                'error' => $examTypeValidator->errors(),
-            ], 422);
+                'errors' => $examTypeValidator->errors()->all(),
+            ], 400);
         }
         try {
             $examType = ExamType::create([
