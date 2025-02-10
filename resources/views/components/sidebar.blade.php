@@ -10,10 +10,11 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  active" href="../pages/dashboard.html">
+          <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>shop </title>
+                
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g transform="translate(-1716.000000, -439.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g transform="translate(1716.000000, 291.000000)">
@@ -30,7 +31,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/tables.html">
+          <a class="nav-link  " href="">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -47,6 +48,52 @@
               </svg>
             </div>
             <span class="nav-link-text ms-1">Tables</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.add-teacher') ? 'active' : '' }}" href="{{ route('admin.add-teacher') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-chalkboard-teacher" style="color: {{request()->routeIs('admin.add-teacher') ? 'white':'black'}};"></i>
+            </div>
+            <span class="nav-link-text ms-1">Register new teacher</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.teachers') ? 'active' : '' }}" href="{{ route('admin.teachers') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-chalkboard-teacher" style="color: {{request()->routeIs('admin.teachers') ? 'white':'black'}};"></i>
+            </div>
+            <span class="nav-link-text ms-1">Teachers</span>
+          </a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.add-student') ? 'active' : '' }}" href="{{ route('admin.add-student') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa-solid fa-user-graduate" style="color: {{request()->routeIs('admin.add-student') ? 'white':'black'}};"></i>
+            </div>
+            <span class="nav-link-text ms-1">Register new student</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.students') ? 'active' : '' }}" href="{{ route('admin.students') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              
+              <i class="fas fa-users" style="color: {{request()->routeIs('admin.students') ? 'white':'black'}};"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.create-class') ? 'active' : '' }}" href="{{ route('admin.create-class') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              
+              <i class="fa-solid fa-book" style="color: {{request()->routeIs('admin.create-class') ? 'white':'black'}};"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">create class</span>
           </a>
         </li>
        

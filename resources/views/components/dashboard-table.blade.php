@@ -4,10 +4,10 @@
         <div class="card-header pb-0">
           <div class="row">
             <div class="col-lg-6 col-7">
-              <h6>Projects</h6>
+              <h6>Students</h6>
               <p class="text-sm mb-0">
                 <i class="fa fa-check text-info" aria-hidden="true"></i>
-                <span class="font-weight-bold ms-1">30 done</span> this month
+                <span class="font-weight-bold ms-1">30</span> students
               </p>
             </div>
             <div class="col-lg-6 col-5 my-auto text-end">
@@ -29,10 +29,10 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Companies</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Members</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Budget</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">UserName</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Class</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Section</th>
                 </tr>
               </thead>
               <tbody>

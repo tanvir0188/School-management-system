@@ -47,11 +47,10 @@ class StudentAuthController extends Controller
     }
     public function logout(Request $request)
     {
-        $student = $request->user()->tokens()->delete();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'Logged out successfully',
-            'student' => $student,
             'status' => true,
         ], 200);
     }
