@@ -93,9 +93,30 @@
               <i class="fa-solid fa-book" style="color: {{request()->routeIs('admin.create-class') ? 'white':'black'}};"></i>
 
             </div>
-            <span class="nav-link-text ms-1">create class</span>
+            <span class="nav-link-text ms-1">Create class</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.create-section') ? 'active' : '' }}" href="{{ route('admin.create-section') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              
+              <i class="fa-solid fa-book" style="color: {{request()->routeIs('admin.create-section') ? 'white':'black'}};"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">Create section</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.create-notice') ? 'active' : '' }}" href="{{ route('admin.create-notice') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              
+              <i class="fa fa-bell" style="color: {{request()->routeIs('admin.create-notice') ? 'white':'black'}};"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">Create notice</span>
+          </a>
+        </li>
+        
        
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>

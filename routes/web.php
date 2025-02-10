@@ -25,6 +25,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/create-class', function () {
         return view('admin.create-class');
     })->name('create-class');
+
+    Route::get('/create-notice', function () {
+        return view('admin.create-notice');
+    })->name('create-notice');
+
+    Route::get('/create-section', function () {
+        return view('admin.create-section');
+    })->name('create-section');
 });
 
 

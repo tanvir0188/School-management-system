@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Admin;
+use App\Models\Section;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Teacher;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,8 +82,24 @@ class AdminAuthController extends Controller
                 'email' => 'required|email|unique:students',
                 'password' => 'required|min:8',
                 'student_id' => 'required|unique:students',
+                'class_id' => 'required|integer|exists:classes,id',
+                'sec_id' => [
+                    'required',
+                    'integer',
+                    'exists:sections,id',
+                    function ($attribute, $value, $fail) use ($request) {
+                        $section = Section::where('id', $value)
+                            ->where('class_id', $request->class_id)
+                            ->exists();
+                        if (!$section) {
+                            $fail('The selected section does not belong to the specified class.');
+                        }
+                    },
+                ],
+
             ]
         );
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -90,21 +107,23 @@ class AdminAuthController extends Controller
                 'errors' => $validator->errors()->all(),
             ], 400);
         }
+
         $student = Student::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'class_id' => $request->class_id,
+            'sec_id' => $request->sec_id,
             'student_id' => $request->student_id,
-
         ]);
 
         return response()->json([
             'status' => true,
             'message' => 'Student registered successfully',
             'student' => $student,
-        ], 201); // 201 Created
-
+        ], 201);
     }
+
 
     public function teacherRegister(Request $request)
     {
@@ -146,6 +165,21 @@ class AdminAuthController extends Controller
             'message' => 'Logged out successfully',
             'status' => true,
         ], 200);
+    }
+    public function teachersWithoutPagination()
+    {
+        $teachers['teachers'] = Teacher::orderBy('name', 'asc')->get();
+        if ($teachers['teachers']->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'teachers' => $teachers,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No teacher users found',
+        ]);
     }
     public function teachers()
     {

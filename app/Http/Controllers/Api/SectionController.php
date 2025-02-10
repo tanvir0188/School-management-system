@@ -24,6 +24,20 @@ class SectionController extends Controller
             'message' => 'No sections found'
         ], 404);
     }
+    public function sectionByClass($id)
+    {
+        $sections = Section::where('class_id', $id)->orderBy('name', 'asc')->get();
+        if ($sections->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'sections' => $sections
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No sections found'
+        ], 404);
+    }
     public function store(Request $request)
     {
         $validateSection = Validator::make(

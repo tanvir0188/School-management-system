@@ -38,13 +38,16 @@ Route::get('exam/{id}', [ExamController::class, 'show']);
 
 Route::get('exam-result', [ExamResultController::class, 'index']);
 Route::get('exam-result/{id}', [ExamResultController::class, 'show']);
-
+Route::get('class/index', [ClassController::class, 'index']);
+Route::get('section/index-by-class/{id}', [SectionController::class, 'sectionByClass']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
     Route::post('/register/student', [AdminAuthController::class, 'studentRegister']);
     Route::post('/register/teacher', [AdminAuthController::class, 'teacherRegister']);
     Route::post('logout', [AdminAuthController::class, 'logout']);
     Route::get('/teacher/index', [AdminAuthController::class, 'teachers']);
+    Route::get('/teacher-without-pagination/index', [AdminAuthController::class, 'teachersWithoutPagination']);
+
     Route::get('/teacher/{id}', [AdminAuthController::class, 'showTeacher']);
     Route::delete('/teacher/{id}', [AdminAuthController::class, 'deleteTeacher']);
     Route::delete('/student/{id}', [AdminAuthController::class, 'deleteStudent']);
@@ -52,7 +55,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::get('/student/{id}', [AdminAuthController::class, 'showStudent']);
     Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
 
-    Route::get('class/index', [ClassController::class, 'index']);
+
     Route::post('class/store', [ClassController::class, 'store']);
     Route::delete('class/{id}', [ClassController::class, 'destroy']);
 

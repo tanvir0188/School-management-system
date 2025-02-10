@@ -49,6 +49,19 @@
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Password" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="class">Class</label>
+                    <select class="form-select form-select-lg mb-2" id="className" required>
+                        <option selected disabled>Select a class</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="section">Section</label>
+                    <select class="form-select form-select-lg mb-2" id="section" required disabled>
+                        <option selected disabled>Select a section</option>
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
@@ -67,6 +80,77 @@
     @include('components.check-admin-auth')
     <script>
         $(document).ready(function() {
+            $('#section').prop('disabled', true);
+
+            // When a class is selected, fetch sections
+            $('#className').on('change', function() {
+                let classId = $(this).val(); // Get selected class ID
+
+                if (classId) {
+                    $.ajax({
+                        url: 'http://127.0.0.1:8000/api/section/index-by-class/' + classId,
+                        type: 'GET',
+                        success: function(response) {
+                            $('#section').empty().append(
+                                '<option selected disabled>Select a section</option>');
+
+                            if (response.sections.length > 0) {
+                                // Populate the section dropdown with available sections
+                                response.sections.forEach(section => {
+                                    $('#section').append(
+                                        `<option value="${section.id}">${section.name}</option>`
+                                        );
+                                });
+                                $('#section').prop('disabled',
+                                false); // Enable if sections are available
+                            } else {
+                                // No sections available
+                                $('#section').empty().append(
+                                    '<option disabled>No section available for this class</option>'
+                                    );
+                                $('#section').prop('disabled',
+                                true); // Disable again if no sections found
+                            }
+                        },
+                        error: function() {
+                            toastr.error('No section available for this class')
+                        }
+                    });
+                } else {
+                    // If no class is selected, reset and disable section dropdown
+                    $('#section').empty().append('<option selected disabled>Select a section</option>');
+                    $('#section').prop('disabled', true);
+                }
+            });
+
+            $.ajax({
+                url: "http://127.0.0.1:8000/api/class/index",
+                type: 'GET',
+                success: function(response) {
+                    console.log("API Response:", response); // Log the full response
+
+                    let classList = response.classes.classes; // Access nested array
+
+                    if (response.status && Array.isArray(classList)) {
+                        let classDropdown = $("#className");
+                        classDropdown.empty().append(
+                            '<option selected disabled>Select a class</option>');
+
+                        classList.forEach(cls => {
+                            console.log(`Class ID: ${cls.id}, Class Name: ${cls.name}`);
+                            classDropdown.append(
+                                `<option value="${cls.id}">${cls.name}</option>`);
+                        });
+                    } else {
+                        console.error("Error: 'classes.classes' is not an array", response.classes);
+                        toastr.error("Unexpected response format.");
+                    }
+                },
+                error: function(xhr) {
+                    console.error("AJAX Error:", xhr.responseText);
+                    toastr.error("Failed to load classes.");
+                }
+            });
             $('#registerStudent').submit(function(e) {
                 e.preventDefault();
 
@@ -74,7 +158,10 @@
                 let password = $('#password').val().trim();
                 let username = $('#name').val().trim();
                 let studentId = $('#studentId').val().trim();
-                let adminToken = localStorage.getItem("admin_token"); // Retrieve admin token from localStorage
+                let className = $('#className').val().trim();
+                let section = $('#section').val().trim();
+                let adminToken = localStorage.getItem(
+                    "admin_token"); // Retrieve admin token from localStorage
 
                 if (!adminToken) {
                     toastr.error("Unauthorized access. Admin token is missing.");
@@ -85,13 +172,16 @@
                     url: "http://127.0.0.1:8000/api/admin/register/student",
                     type: 'POST',
                     headers: {
-                        "Authorization": "Bearer " + adminToken // Attach token in the request headers
+                        "Authorization": "Bearer " +
+                            adminToken // Attach token in the request headers
                     },
                     data: JSON.stringify({
                         email: email,
                         password: password,
                         name: username,
-                        student_id: studentId
+                        student_id: studentId,
+                        class_id: className,
+                        sec_id: section,
                     }),
                     contentType: "application/json",
                     dataType: "json",
@@ -105,11 +195,12 @@
                     },
                     error: function(xhr) {
                         if (xhr.status === 401) { // Unauthorized access
-                            toastr.error("Invalid or expired admin token. Please log in again.");
+                            toastr.error(
+                                "Invalid or expired admin token. Please log in again.");
                             localStorage.removeItem("admin_token"); // Remove invalid token
                             setTimeout(function() {
                                 window.location.href =
-                                "/admin/login"; // Redirect to login page
+                                    "/admin/login"; // Redirect to login page
                             }, 2000);
                         } else {
                             let errors = xhr.responseJSON;

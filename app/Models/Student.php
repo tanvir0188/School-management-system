@@ -16,6 +16,8 @@ class Student extends Model
         'email',
         'student_id',
         'password',
+        'class_id',
+        'sec_id',
 
     ];
 
