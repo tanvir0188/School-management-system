@@ -38,6 +38,7 @@ Route::get('exam/{id}', [ExamController::class, 'show']);
 
 Route::get('exam-result', [ExamResultController::class, 'index']);
 Route::get('exam-result/{id}', [ExamResultController::class, 'show']);
+
 Route::get('class/index', [ClassController::class, 'index']);
 Route::get('section/index-by-class/{id}', [SectionController::class, 'sectionByClass']);
 
@@ -76,6 +77,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::post('exam', [ExamController::class, 'store']);
     Route::put('exam/{id}', [ExamController::class, 'update']);
     Route::delete('exam/{id}', [ExamController::class, 'destroy']);
+
+    Route::get('exam/{id}/students', [ExamController::class, 'getStudentsByExam']);
+    Route::get('exam/all', [ExamController::class, 'indexWithoutPagination']);
 
     Route::post('exam-result', [ExamResultController::class, 'store']);
     Route::put('exam-result/{id}', [ExamResultController::class, 'update']);

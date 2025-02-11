@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Exam;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -24,6 +25,49 @@ class ExamController extends Controller
         return response()->json([
             'status' => false,
             'message' => 'No exams found',
+        ], 404);
+    }
+    public function indexWithoutPagination()
+    {
+        $exams = Exam::orderBy('exam_date', 'desc')->get();
+        if ($exams->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'exams' => $exams,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No exams found',
+        ], 404);
+    }
+
+    public function getStudentsByExam($exam_id)
+    {
+        // ✅ Retrieve the exam
+        $exam = Exam::find($exam_id);
+
+        if (!$exam) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Exam not found',
+            ], 404);
+        }
+
+        // ✅ Fetch students with the same class_id as the exam
+        $students = Student::where('class_id', $exam->class_id)->get();
+        if ($students->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'exam_id' => $exam_id,
+                'class_id' => $exam->class_id,
+                'students' => $students,
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No students found',
         ], 404);
     }
 

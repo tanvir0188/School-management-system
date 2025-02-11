@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Exam;
+use App\Models\Student;
 use App\Models\ExamResult;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -43,6 +44,8 @@ class ExamResultController extends Controller
     }
 
 
+
+
     public function store(Request $request)
     {
         $examResultValidator = Validator::make(
@@ -68,9 +71,24 @@ class ExamResultController extends Controller
             ], 422);
         }
 
-
-        // Retrieve the full_marks for the given exam
         $exam = Exam::find($request->exam_id);
+        $student = Student::find($request->student_id);
+
+        if (!$exam || !$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid exam or student',
+            ], 422);
+        }
+
+
+        if ($exam->class_id !== $student->class_id) {
+            return response()->json([
+                'status' => false,
+                'message' => "This student is not enrolled in the class for this exam.",
+            ], 422);
+        }
+
 
         if ($request->marks > $exam->full_marks) {
             return response()->json([
@@ -102,8 +120,10 @@ class ExamResultController extends Controller
 
 
 
+
     public function update(Request $request, $id)
     {
+
         $examResult = ExamResult::find($id);
         if (!$examResult) {
             return response()->json([
@@ -112,6 +132,7 @@ class ExamResultController extends Controller
             ], 404);
         }
 
+
         $examResultValidator = Validator::make(
             $request->all(),
             [
@@ -119,8 +140,7 @@ class ExamResultController extends Controller
                 'student_id' => [
                     'required',
                     'exists:students,id',
-                    // Ensure the student is not trying to update the result for the same exam they already have a result for
-                    Rule::unique('exams_results')->where(function ($query) use ($request, $examResult) {
+                    Rule::unique('exam_results')->where(function ($query) use ($request, $examResult) {
                         return $query->where('exam_id', $request->exam_id)
                             ->where('student_id', $request->student_id)
                             ->where('id', '<>', $examResult->id); // Exclude current record from the uniqueness check
@@ -137,8 +157,25 @@ class ExamResultController extends Controller
             ], 422);
         }
 
-        // Retrieve the full_marks for the given exam
+
         $exam = Exam::find($request->exam_id);
+        $student = Student::find($request->student_id);
+
+        if (!$exam || !$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid exam or student',
+            ], 422);
+        }
+
+
+        if ($exam->class_id !== $student->class_id) {
+            return response()->json([
+                'status' => false,
+                'message' => "This student is not enrolled in the class for this exam.",
+            ], 422);
+        }
+
 
         if ($request->marks > $exam->full_marks) {
             return response()->json([
@@ -148,6 +185,7 @@ class ExamResultController extends Controller
         }
 
         try {
+
             $examResult->update([
                 'exam_id' => $request->input('exam_id'),
                 'student_id' => $request->input('student_id'),
@@ -167,6 +205,7 @@ class ExamResultController extends Controller
             ], 500);
         }
     }
+
 
 
     public function destroy($id)

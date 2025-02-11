@@ -14,7 +14,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('admin.teachers');
     })->name('teachers');
 
-
     Route::get('/add-student', function () {
         return view('admin.register-student');
     })->name('add-student');

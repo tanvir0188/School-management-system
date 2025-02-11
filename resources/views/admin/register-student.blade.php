@@ -112,8 +112,16 @@
                                 true); // Disable again if no sections found
                             }
                         },
-                        error: function() {
-                            toastr.error('No section available for this class')
+                        error: function(xhr) {
+                            if (xhr.status === 404) {
+                                toastr.warning(xhr.responseJSON.message); // Show 404 message in toastr
+                                $('#section').empty().append(
+                                    '<option disabled>No section available for this class</option>'
+                                );
+                                $('#section').prop('disabled', true);
+                            } else {
+                                toastr.error('An error occurred while fetching sections');
+                            }
                         }
                     });
                 } else {
