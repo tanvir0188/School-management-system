@@ -22,8 +22,8 @@
         @include('components.navbar')
         <div class="container-fluid py-4">
             @include('components.dashboard-cards')
-            @include('components.dashboard-table')
-            @include('components.footer')
+            
+            
         </div>
 
     </main>
@@ -36,28 +36,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let token = localStorage.getItem("admin_token"); // Use localStorage
-
-            if (!token) {
-                window.location.href = "http://127.0.0.1:8000/admin-sign-in"; 
-                return; 
-            }
-
-            fetch("http://127.0.0.1:8000/api/admin/profile", { 
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                }
-            })
-            .catch(error => {
-                console.error("Auth Check Failed:", error);
-                localStorage.removeItem("admin_token"); 
-                window.location.href = "http://127.0.0.1:8000/admin-sign-in"; 
-            });
-        });
-    </script>
+    @include('components.admin-auth-redirect')
 
     
     

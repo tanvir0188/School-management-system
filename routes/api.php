@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\ExamTypeController;
 use App\Http\Controllers\Api\AdminAuthController;
+use App\Http\Controllers\Api\AdminDashboardController;
 use App\Http\Controllers\Api\ExamResultController;
 
 use App\Http\Controllers\Api\StudentAuthController;
@@ -26,6 +27,8 @@ Route::get('studentProfile/{id}', [StudentProfileController::class, 'show']);
 Route::get('teacherProfile/{id}', [TeacherProfileController::class, 'show']);
 Route::get('notice', [NoticeController::class, 'index']);
 Route::get('notice/{id}', [NoticeController::class, 'show']);
+Route::get('studentCount', [AdminDashboardController::class, 'getStudentCount']);
+Route::get('teacherCount', [AdminDashboardController::class, 'getTeacherCount']);
 
 Route::get('section-notice', [SectionNoticeController::class, 'index']);
 Route::get('section-notice/{id}', [SectionNoticeController::class, 'show']);
