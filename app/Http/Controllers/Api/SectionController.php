@@ -83,6 +83,20 @@ class SectionController extends Controller
             ], 500);
         }
     }
+    public function getSectionCount()
+    {
+        $count = Section::count();
+        if ($count) {
+            return response()->json([
+                'status' => true,
+                'sectionCount' => $count,
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No sections found'
+        ], 404);
+    }
     public function show($id)
     {
         $section = Section::find($id);

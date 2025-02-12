@@ -29,12 +29,21 @@ Route::get('notice', [NoticeController::class, 'index']);
 Route::get('notice/{id}', [NoticeController::class, 'show']);
 Route::get('studentCount', [AdminDashboardController::class, 'getStudentCount']);
 Route::get('teacherCount', [AdminDashboardController::class, 'getTeacherCount']);
+Route::get('noticeCount', [NoticeController::class, 'getNoticeCount']);
+
+Route::get('/students/search', [StudentAuthController::class, 'search']);
+
+Route::get('classCount', [ClassController::class, 'getClassCount']);
+Route::get('sectionCount', [SectionController::class, 'getSectionCount']);
 
 Route::get('section-notice', [SectionNoticeController::class, 'index']);
 Route::get('section-notice/{id}', [SectionNoticeController::class, 'show']);
 
+
 Route::get('exam-type', [ExamTypeController::class, 'index']);
 Route::get('exam-type/{id}', [ExamTypeController::class, 'show']);
+Route::get('/exam-type-count', [AdminDashboardController::class, 'getExamTypeCount']);
+Route::get('/exam-count-by-type', [AdminDashboardController::class, 'getExamCountByType']);
 
 Route::get('exam', [ExamController::class, 'index']);
 Route::get('exam/{id}', [ExamController::class, 'show']);
@@ -46,6 +55,7 @@ Route::get('class/index', [ClassController::class, 'index']);
 Route::get('section/index-by-class/{id}', [SectionController::class, 'sectionByClass']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], function () {
+
     Route::post('/register/student', [AdminAuthController::class, 'studentRegister']);
     Route::post('/register/teacher', [AdminAuthController::class, 'teacherRegister']);
     Route::post('logout', [AdminAuthController::class, 'logout']);
@@ -87,6 +97,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::post('exam-result', [ExamResultController::class, 'store']);
     Route::put('exam-result/{id}', [ExamResultController::class, 'update']);
     Route::delete('exam-result/{id}', [ExamResultController::class, 'destroy']);
+    Route::get('exam-result-by-type/{id}', [ExamController::class, 'examByTypeWithResult']);
 });
 
 // Student Routes

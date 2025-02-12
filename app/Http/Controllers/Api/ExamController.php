@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Exam;
 use App\Models\Student;
+use App\Models\ExamResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -163,6 +165,43 @@ class ExamController extends Controller
             ], 500);
         }
     }
+    public function examByTypeWithResult($id)
+    {
+        $examResults = DB::table('exams')
+            ->join('classes', 'exams.class_id', '=', 'classes.id')
+            ->join('students', 'students.class_id', '=', 'classes.id')
+            ->leftJoin('exams_results', function ($join) {
+                $join->on('exams_results.exam_id', '=', 'exams.id')
+                    ->on('exams_results.student_id', '=', 'students.id');
+            })
+            ->where('exams.exam_type_id', $id)
+            ->select(
+                'exams.exam_date',
+                'classes.name as class_name',
+                'students.name as student_name',
+                'exams.subject',
+                'students.student_id',
+                'exams.full_marks',
+                DB::raw("COALESCE(exams_results.marks, 'Pending') as mark") // If no marks, show 'Pending'
+            )
+            ->paginate(5);
+
+        if ($examResults->total() > 0) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Exam results fetched successfully',
+                'examResultsCount' => $examResults->total(),
+                'data' => $examResults,
+
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No exam results found',
+        ], 404);
+    }
+
+
     public function destroy($id)
     {
         $exam = Exam::find($id);

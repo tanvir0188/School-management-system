@@ -54,4 +54,33 @@ class StudentAuthController extends Controller
             'status' => true,
         ], 200);
     }
+
+    public function search(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'search' => 'nullable|string',
+        ]);
+
+        $query = Student::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->orWhere('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('student_id', 'like', '%' . $search . '%')
+                    ->orWhere('class_id', 'like', '%' . $search . '%')
+                    ->orWhere('sec_id', 'like', '%' . $search . '%');
+            });
+        }
+
+        $students = $query->paginate(10);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Students retrieved successfully',
+            'data' => $students,
+        ], 200);
+    }
 }

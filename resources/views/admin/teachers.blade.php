@@ -31,22 +31,10 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-6 col-5 my-auto text-end">
-                                    <div class="dropdown float-lg-end pe-4">
-                                        <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v text-secondary"></i>
-                                        </a>
-                                        <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
-                                            aria-labelledby="dropdownTable">
-                                            <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a>
-                                            </li>
-                                            <li><a class="dropdown-item border-radius-md" href="javascript:;">Another
-                                                    action</a>
-                                            </li>
-                                            <li><a class="dropdown-item border-radius-md" href="javascript:;">Something
-                                                    else
-                                                    here</a></li>
-                                        </ul>
+                                    <div class="input-group">
+                                        <span class="input-group-text text-body"><i class="fas fa-search"
+                                                aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" placeholder="Type here...">
                                     </div>
                                 </div>
                             </div>
@@ -56,8 +44,15 @@
                                 <table id="teacherTable" class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">UserName</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                UserName</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Email</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="teacherData">
@@ -81,7 +76,7 @@
     @include('admin.admin-ajax-functions.get-teachers')
     @include('components.admin-auth-redirect')
 
-    
+
 
 
 </body>

@@ -24,6 +24,20 @@ class NoticeController extends Controller
             'message' => 'No notices found',
         ], 404);
     }
+    public function getNoticeCount()
+    {
+        $count = Notice::count();
+        if ($count) {
+            return response()->json([
+                'status' => true,
+                'noticeCount' => $count,
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No notices found',
+        ]);
+    }
     public function store(Request $request)
     {
         $noticeValidator = Validator::make(

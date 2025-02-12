@@ -25,6 +25,20 @@ class ClassController extends Controller
             'message' => 'No classes found',
         ], 404);
     }
+    public function getClassCount()
+    {
+        $classCount = ClassModel::count();
+        if ($classCount) {
+            return response()->json([
+                'status' => true,
+                'classCount' => $classCount,
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'No classes found',
+        ], 404);
+    }
 
     public function store(Request $request)
     {

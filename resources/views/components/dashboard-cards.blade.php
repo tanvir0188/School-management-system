@@ -8,12 +8,12 @@
             <div class="row">
               <div class="col-8 text-start">
                 <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                  <i class="ni ni-circle-08 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                  <i class="fa-solid fa-user-tie" style="color: black;"></i>
                 </div>
-                <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                  1600
+                <h5 id="teacherCount" class="text-white font-weight-bolder mb-0 mt-3">
+                  0
                 </h5>
-                <span class="text-white text-sm">Teachers</span>
+                <span class="text-white text-sm">Total Teachers</span>
               </div>
               <div class="col-4">
                 <div class="dropdown text-end mb-6">
@@ -26,7 +26,7 @@
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
                   </ul>
                 </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
+                
               </div>
             </div>
           </div>
@@ -40,10 +40,10 @@
             <div class="row">
               <div class="col-8 text-start">
                 <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                  <i class="ni ni-active-40 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                  <i class="fa-solid fa-user-graduate" style="color: black;"></i>
                 </div>
-                <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                  357
+                <h5 id="studentCount" class="text-white font-weight-bolder mb-0 mt-3">
+                  0
                 </h5>
                 <span class="text-white text-sm">Total Students</span>
               </div>
@@ -58,7 +58,7 @@
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
                   </ul>
                 </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+124%</p>
+                
               </div>
             </div>
           </div>
@@ -72,12 +72,12 @@
             <div class="row">
               <div class="col-8 text-start">
                 <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                  <i class="ni ni-cart text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                  <i class="fa-solid fa-chalkboard" style="color: black;"></i>
                 </div>
-                <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                  2300
+                <h5 id="classCount" class="text-white font-weight-bolder mb-0 mt-3">
+                  0
                 </h5>
-                <span class="text-white text-sm">Purchases</span>
+                <span class="text-white text-sm">Total classes</span>
               </div>
               <div class="col-4">
                 <div class="dropdown text-end mb-6">
@@ -90,7 +90,7 @@
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
                   </ul>
                 </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+15%</p>
+                
               </div>
             </div>
           </div>
@@ -104,12 +104,12 @@
             <div class="row">
               <div class="col-8 text-start">
                 <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                  <i class="ni ni-like-2 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
+                  <i class="fa-solid fa-book" style="color: black;"></i>
                 </div>
-                <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                  940
+                <h5 id="sectionCount" class="text-white font-weight-bolder mb-0 mt-3">
+                  0
                 </h5>
-                <span class="text-white text-sm">Likes</span>
+                <span class="text-white text-sm">Total Sections</span>
               </div>
               <div class="col-4">
                 <div class="dropstart text-end mb-6">
@@ -122,7 +122,7 @@
                     <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
                   </ul>
                 </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+90%</p>
+                
               </div>
             </div>
           </div>
