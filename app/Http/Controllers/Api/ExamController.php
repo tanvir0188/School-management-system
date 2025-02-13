@@ -29,6 +29,56 @@ class ExamController extends Controller
             'message' => 'No exams found',
         ], 404);
     }
+    public function getExams(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'search' => 'nullable|string',
+        ]);
+
+        // Start the query
+        $query = DB::table('exams')
+            ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
+            ->join('classes', 'exams.class_id', '=', 'classes.id')
+            ->select(
+                'exam_types.name as exam_type_name',
+                'classes.name as class_name',
+                'exams.id as exam_id',
+                'exams.subject',
+                'exams.full_marks',
+                'exams.exam_date'
+            )
+            ->orderBy('exam_date', 'desc');
+
+        // Add search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->orWhere('exam_types.name', 'like', '%' . $search . '%')
+                    ->orWhere('classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('exams.subject', 'like', '%' . $search . '%')
+                    ->orWhere('exams.full_marks', 'like', '%' . $search . '%')
+                    ->orWhere('exams.exam_date', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Paginate the results
+        $exams = $query->paginate(10);
+
+        // Return the response
+        if ($exams->total() > 0) {
+            return response()->json([
+                'status' => true,
+                'exams' => $exams,
+                'examCount' => $exams->total(),
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No exams found',
+        ], 404);
+    }
     public function indexWithoutPagination()
     {
         $exams = Exam::orderBy('exam_date', 'desc')->get();

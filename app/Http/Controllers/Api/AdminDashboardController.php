@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\ExamType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class AdminDashboardController extends Controller
@@ -39,37 +40,25 @@ class AdminDashboardController extends Controller
 
     public function getExamCountByType()
     {
-        // Fetch all exam types ordered by name
-        $examTypes = ExamType::orderBy('name', 'asc')->get();
+        // Fetch exam types with exam count in one query
+        $examCounts = ExamType::leftJoin('exams', 'exam_types.id', '=', 'exams.exam_type_id')
+            ->select('exam_types.id', 'exam_types.name', DB::raw('COUNT(exams.id) as exam_count'))
+            ->groupBy('exam_types.id', 'exam_types.name')
+            ->orderBy('exam_types.name', 'asc')
+            ->get();
 
-        // Check if exam types exist
-        if ($examTypes->isEmpty()) {
+        // Check if any exam types exist
+        if ($examCounts->isEmpty()) {
             return response()->json([
                 'status' => false,
-                'message' => 'No exam types found',
-            ], 404); // 404 Not Found
+                'message' => 'No exam types found'
+            ], 404);
         }
 
-        // Initialize an array to store the result
-        $result = [];
-
-        // Loop through each exam type
-        foreach ($examTypes as $examType) {
-            // Get the count of exams for the current exam type
-            $examCount = Exam::where('exam_type_id', $examType->id)->count();
-
-            // Add the exam type details and count to the result array
-            $result[] = [
-                'id' => $examType->id,
-                'name' => $examType->name,
-                'exam_count' => $examCount,
-            ];
-        }
-
-        // Return the result
+        // Return the response
         return response()->json([
             'status' => true,
-            'data' => $result,
-        ], 200); // 200 OK
+            'data' => $examCounts
+        ], 200);
     }
 }

@@ -44,7 +44,7 @@ Route::get('exam-type', [ExamTypeController::class, 'index']);
 Route::get('exam-type/{id}', [ExamTypeController::class, 'show']);
 Route::get('/exam-type-count', [AdminDashboardController::class, 'getExamTypeCount']);
 Route::get('/exam-count-by-type', [AdminDashboardController::class, 'getExamCountByType']);
-
+Route::get('public/exams', [ExamController::class, 'getExams']);
 Route::get('exam', [ExamController::class, 'index']);
 Route::get('exam/{id}', [ExamController::class, 'show']);
 
@@ -98,6 +98,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::put('exam-result/{id}', [ExamResultController::class, 'update']);
     Route::delete('exam-result/{id}', [ExamResultController::class, 'destroy']);
     Route::get('exam-result-by-type/{id}', [ExamController::class, 'examByTypeWithResult']);
+    Route::get('exam-results', [ExamResultController::class, 'getExamResults']);
 });
 
 // Student Routes

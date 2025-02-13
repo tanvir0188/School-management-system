@@ -41,12 +41,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/create-result', function () {
         return view('admin.create-result');
     })->name('create-result');
+    Route::get('/exams-type-management-with-result', function () {
+        return view('admin.exams-type-management-with-result');
+    })->name('exams-type-management-with-result');
     Route::get('/exams', function () {
         return view('admin.exams');
     })->name('exams');
     Route::get('/notices', function () {
         return view('admin.notices');
     })->name('notices');
+    Route::get('/results', function () {
+        return view('admin.results');
+    })->name('results');
 });
 
 
