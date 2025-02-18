@@ -15,6 +15,7 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         @include('student.components.navbar')
         <div class="container-fluid py-4">
+            @include('student.components.dashboard-cards')
 
 
 
@@ -22,17 +23,12 @@
 
     </main>
     @include('components.admin-scripts')
-    {{-- @include('components.admin-auth-redirect') --}}
     <script src="{{ asset('assets/js/student-ajax-functions/redirect.js') }}"></script>
+    <script src="{{ asset('assets/js/student-ajax-functions/cardInfos.js') }}"></script>
+
+
 
     <script src="{{ asset('assets/js/public-ajax-functions/toastr.js') }}"></script>
-
-
-
-
-
-
-
 </body>
 
 </html>

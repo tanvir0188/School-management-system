@@ -45,6 +45,38 @@ class StudentAuthController extends Controller
             'token' => $token,
         ]);
     }
+    public function getLoginInfos($id)
+    {
+        $student = Student::with([
+            'class', // Relationship to get the class details
+            'section', // Relationship to get the section details
+            'section.teacher', // Relationship to get the teacher assigned to the section
+            'profile' // Relationship to get the student profile
+        ])->find($id);
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student not found',
+            ], 404);
+        }
+
+        // Extract the required information
+        $className = $student->class->name ?? 'N/A';
+        $sectionName = $student->section->name ?? 'N/A';
+        $teacherName = $student->section->teacher->name ?? 'N/A';
+        $studentProfile = $student->profile ?? null;
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'class_name' => $className,
+                'section_name' => $sectionName,
+                'teacher_name' => $teacherName,
+                'student_profile' => $studentProfile,
+            ],
+        ]);
+    }
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

@@ -25,11 +25,11 @@ class Student extends Model
     {
         return $this->hasOne(StudentProfile::class);
     }
-    public function section()
+    public function class()
     {
         return $this->belongsTo(ClassModel::class, 'class_id', 'id');
     }
-    public function class()
+    public function section()
     {
         return $this->belongsTo(Section::class, 'sec_id', 'id');
     }

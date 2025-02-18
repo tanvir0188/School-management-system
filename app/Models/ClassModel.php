@@ -15,4 +15,8 @@ class ClassModel extends Model
     {
         return $this->hasMany(Student::class, 'class_id', 'id');
     }
+    public function sections()
+    {
+        return $this->hasMany(Section::class, 'class_id');
+    }
 }
