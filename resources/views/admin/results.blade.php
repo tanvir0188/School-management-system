@@ -70,6 +70,7 @@
             </div>
             <div id="paginationLinks" class="mt-3"></div>
         </div>
+        @include('admin.result-modal-form')
 
 
     </main>

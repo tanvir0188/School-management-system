@@ -24,23 +24,25 @@ $(document).ready(function () {
 
 
 
-    function fetchResults(page = 1, searchParams = {}) {
+    $("#searchButton").on("click", function (e) {
+        e.preventDefault(); // Prevents form reload
+        let searchValue = $("#searchResults").val().trim();
+        currentSearchParams = { search: searchValue }; // Store search params globally
+        fetchResults(1, currentSearchParams);
+    });
 
+    function fetchResults(page = 1, searchParams = {}) {
         $.ajax({
             url: `http://127.0.0.1:8000/api/admin/exam-results?page=${page}`,
             type: "GET",
             data: searchParams,
             dataType: "json",
-            headers: {
-                "Authorization": `Bearer ${adminToken}`
-            },
-
+            headers: { "Authorization": `Bearer ${adminToken}` },
             success: function (response) {
                 if (response.status) {
                     let results = response.results.data; // Access nested data
                     let resultCount = response.resultCount;
-                    let searchedResult = $('#resultCount');
-                    searchedResult.text(resultCount);
+                    $('#resultCount').text(resultCount);
                     console.log('count:' + resultCount);
 
                     let resultTable = $("#resultData");
@@ -48,7 +50,7 @@ $(document).ready(function () {
 
                     $.each(results, function (index, result) {
                         let row = `
-                        <tr>
+                        <tr data-id="${result.id}">
                             <td>${result.exam_type_name}</td>
                             <td>${result.subject}</td>
                             <td>${result.class_name}</td>
@@ -56,16 +58,16 @@ $(document).ready(function () {
                             <td>${result.student_name}</td>
                             <td>${result.student_id}</td>
                             <td><span class="badge bg-primary">${result.full_marks}</span></td>
-                            <td><span class="badge bg-warning">${result.marks}</span></td>
+                            <td><span class="badge bg-warning marks-cell">${result.marks}</span></td>
                             <td><span class="badge bg-secondary">${result.exam_date}</span></td>
                             <td>
-                                <a href="#" class="text-warning update-exam" data-id="${result.exam_id}">
+                                <button type="button" data-toggle="modal" data-target="#exampleModal" class="text-warning update-exam badge bg-warning" data-exam-id="${result.exam_id}" data-student-id="${result.s_id}" data-marks="${result.marks}" data-full-mark="${result.full_marks}">
                                     <span class="badge bg-warning"><i class="fa-solid fa-edit"></i></span>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     `;
-                    resultTable.append(row);
+                        resultTable.append(row);
                     });
 
                     $("#paginationLinks").html(generatePagination(response.results));
@@ -81,36 +83,72 @@ $(document).ready(function () {
             }
         });
     }
+    $(document).on('click', '.update-exam', function () {
+        // Get the exam ID and student ID from the data attributes
+        let examId = $(this).data('exam-id');
+        let studentId = $(this).data('student-id');
+        let f_mark = $(this).data('full-mark');
 
+        // Get the marks from the corresponding <td> in the same row
+        let marks = $(this).closest('tr').find('.marks-cell').text().trim();
 
-    function deleteResult(resultId) {
+        // Populate the modal with data
+        $('#exam_id').val(examId);
+        $('#student_id').val(studentId);
+        $('#marks').val(marks);
+        $('#f_mark').text('('+f_mark+')');
+        let isPending = marks === "Pending";
+        $('#marks').data('pending', isPending);
+
+        // Show the modal
+        $('#exampleModal').modal('show');
+    });
+
+    $('#saveChanges').on('click', function () {
+        let examId = $('#exam_id').val();
+        let studentId = $('#student_id').val();
+        let marks = $('#marks').val();
+
+        if (!examId || !studentId || marks === "") {
+            toastr.error("Please fill in all fields.");
+            return;
+        }
+
+        let url, method, data;
+        let isPending = $('#marks').data('pending'); // Get the stored pending status
+
+        if (isPending) {
+            // If marks were "Pending", store a new result
+            url = `http://127.0.0.1:8000/api/admin/exam-result`;
+            method = "POST";
+            data = { exam_id: examId, student_id: studentId, marks: marks }; // Include exam_id and student_id in the payload
+        } else {
+            // If marks were not "Pending", update the result
+            url = `http://127.0.0.1:8000/api/admin/exam-results/${examId}/${studentId}`;
+            method = "PATCH";
+            data = { marks: marks }; // Only send marks for updating
+        }
+
         $.ajax({
-            url: `http://127.0.0.1:8000/api/admin/exam-result/${resultId}`,
-            type: "DELETE",
+            url: url,
+            type: method,
+            data: data,
             dataType: "json",
-            headers: {
-                "Authorization": "Bearer " + adminToken
-            },
+            headers: { "Authorization": `Bearer ${adminToken}` },
             success: function (response) {
                 if (response.status) {
-                    toastr.success(response.message); // Show success message
-                    fetchResults(); // Refresh the table data
+                    toastr.success(response.message);
+                    $('#exampleModal').modal('hide');
+                    fetchResults(); // Refresh the results table
                 } else {
-                    toastr.error(response.message); // Show error message
+                    toastr.error(response.message);
                 }
             },
             error: function (xhr) {
-                let errorMessage = xhr.responseJSON?.message || "Failed to delete result";
-                toastr.error(errorMessage); // Show error message
+                let errorMessage = xhr.responseJSON?.message || "Failed to save changes";
+                toastr.error(errorMessage);
             }
         });
-    }
-    $(document).on("click", ".delete-result", function (e) {
-        e.preventDefault(); // Prevent default link behavior
-        let resultmId = $(this).data("id"); // Get the exam ID
-        if (confirm("Are you sure you want to delete this result?")) {
-            deleteResult(resultId); // Call the delete function
-        }
     });
 
     function generatePagination(data) {

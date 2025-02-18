@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::delete('exam-result/{id}', [ExamResultController::class, 'destroy']);
     Route::get('exam-result-by-type/{id}', [ExamController::class, 'examByTypeWithResult']);
     Route::get('exam-results', [ExamResultController::class, 'getExamResults']);
+    Route::patch('exam-results/{exam_id}/{student_id}', [ExamResultController::class, 'patchMark']);
 });
 
 // Student Routes

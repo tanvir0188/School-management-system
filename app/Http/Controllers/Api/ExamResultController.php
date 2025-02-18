@@ -71,9 +71,14 @@ class ExamResultController extends Controller
                 'students.name as student_name',
                 'students.student_id as student_id',
                 'exams.full_marks',
+                'exams.id as exam_id',
+                'students.id as s_id',
+                'exams_results.id as result_id',
                 DB::raw('IFNULL(exams_results.marks, "Pending") as marks'),
                 'exams.exam_date'
             )
+            ->whereNotNull('sections.name')
+            ->whereNotNull('students.student_id')
             ->orderBy('exams.exam_date', 'desc');
 
         // Add search functionality
@@ -108,6 +113,68 @@ class ExamResultController extends Controller
             'status' => false,
             'message' => 'No results found',
         ], 404);
+    }
+
+    public function patchMark(Request $request, $exam_id, $student_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'marks' => 'required|numeric|min:0',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'error' => $validator->errors(),
+            ], 422);
+        }
+        $exam = Exam::find($exam_id);
+        $student = Student::find($student_id);
+        $examResult = ExamResult::where('exam_id', $exam_id)->where('student_id', $student_id)->first();
+
+        if (!$exam || !$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid exam or student',
+            ], 422);
+        }
+
+        if (!$examResult) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Exam result not found',
+            ], 404);
+        }
+
+        if ($exam->class_id !== $student->class_id) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This student is not enrolled in the class for this exam.',
+            ], 422);
+        }
+
+        if ($request->marks > $exam->full_marks) {
+            return response()->json([
+                'status' => false,
+                'message' => "Marks cannot be greater than the full marks ({$exam->full_marks}) for this exam.",
+            ], 422);
+        }
+
+        try {
+            $examResult->update([
+                'marks' => $request->marks,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Exam marks updated successfully',
+                'exam_result' => $examResult,
+            ], 200);
+        } catch (\Exception $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to update exam marks',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
     }
 
 
