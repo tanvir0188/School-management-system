@@ -35,6 +35,7 @@ class StudentAuthController extends Controller
                 'message' => 'Invalid credentials',
             ], 401);
         }
+        $student->makeHidden('password');
 
         $token = $student->createToken('StudentToken')->plainTextToken;
 

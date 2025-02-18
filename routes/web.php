@@ -72,4 +72,10 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', function () {
         return view('student.dashboard');
     })->name('dashboard');
+    Route::get('/profile', function () {
+        return view('student.profile');
+    })->name('profile');
+    Route::get('/create-profile', function () {
+        return view('student.create-profile');
+    })->name('create-profile');
 });
