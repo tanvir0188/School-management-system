@@ -115,6 +115,72 @@ class ExamResultController extends Controller
         ], 404);
     }
 
+    // public function getExamResultsBySubject(Request $request, $subject)
+    // {
+    //     // Validate the request
+    //     $request->validate([
+    //         'search' => 'nullable|string',
+    //     ]);
+
+    //     // Start the query
+    //     $query = DB::table('exams')
+    //         ->join('classes', 'exams.class_id', '=', 'classes.id')
+    //         ->leftJoin('sections', 'classes.id', '=', 'sections.class_id')
+    //         ->leftJoin('students', function ($join) {
+    //             $join->on('students.class_id', '=', 'classes.id')
+    //                 ->on('students.sec_id', '=', 'sections.id');
+    //         })
+    //         ->leftJoin('exams_results', function ($join) {
+    //             $join->on('exams_results.exam_id', '=', 'exams.id')
+    //                 ->on('exams_results.student_id', '=', 'students.id');
+    //         })
+    //         ->select(
+    //             'classes.name as class_name',
+    //             'sections.name as section_name',
+    //             'students.name as student_name',
+    //             'students.student_id as student_id',
+    //             'exams.full_marks',
+    //             'exams_results.id as result_id',
+    //             DB::raw('IFNULL(exams_results.marks, "Pending") as marks'),
+    //             'exams.exam_date'
+    //         )
+    //         ->where('exams.subject', $subject) // Filter by subject
+    //         ->whereNotNull('sections.name')
+    //         ->whereNotNull('students.student_id')
+    //         ->orderBy('exams.exam_date', 'desc');
+
+    //     // Add search functionality
+    //     if ($request->filled('search')) {
+    //         $search = $request->search;
+    //         $query->where(function ($q) use ($search) {
+    //             $q->orWhere('classes.name', 'like', '%' . $search . '%')
+    //                 ->orWhere('sections.name', 'like', '%' . $search . '%')
+    //                 ->orWhere('students.name', 'like', '%' . $search . '%')
+    //                 ->orWhere('students.student_id', 'like', '%' . $search . '%')
+    //                 ->orWhere('exams.full_marks', 'like', '%' . $search . '%')
+    //                 ->orWhere('exams.exam_date', 'like', '%' . $search . '%')
+    //                 ->orWhere('exams_results.marks', 'like', '%' . $search . '%');
+    //         });
+    //     }
+
+    //     // Paginate the results
+    //     $results = $query->paginate(10);
+
+    //     // Return the response
+    //     if ($results->total() > 0) {
+    //         return response()->json([
+    //             'status' => true,
+    //             'results' => $results,
+    //             'resultCount' => $results->total(),
+    //         ], 200);
+    //     }
+
+    //     return response()->json([
+    //         'status' => false,
+    //         'message' => 'No results found for the subject: ' . $subject,
+    //     ], 404);
+    // }
+
     public function patchMark(Request $request, $exam_id, $student_id)
     {
         $validator = Validator::make($request->all(), [

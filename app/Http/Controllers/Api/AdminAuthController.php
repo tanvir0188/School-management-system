@@ -124,7 +124,6 @@ class AdminAuthController extends Controller
         ], 201);
     }
 
-
     public function teacherRegister(Request $request)
     {
         $validator = Validator::make(

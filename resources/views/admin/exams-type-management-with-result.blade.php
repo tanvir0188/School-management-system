@@ -31,7 +31,7 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-6 col-5 my-auto text-end">
-                                    <a class="dropdown-item border-radius-md" href="{{route('admin.results')}}">See the full result list</a>
+                                    <a class=" border-radius-md btn btn-primary" href="{{route('admin.results')}}">See the full result list</a>
                                 </div>
                             </div>
                         </div>

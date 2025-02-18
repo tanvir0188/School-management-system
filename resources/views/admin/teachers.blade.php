@@ -30,13 +30,13 @@
                                         <span id="teacherCount" class="font-weight-bold ms-1"></span> teachers
                                     </p>
                                 </div>
-                                <div class="col-lg-6 col-5 my-auto text-end">
+                                {{-- <div class="col-lg-6 col-5 my-auto text-end">
                                     <div class="input-group">
                                         <span class="input-group-text text-body"><i class="fas fa-search"
                                                 aria-hidden="true"></i></span>
                                         <input type="text" class="form-control" placeholder="Type here...">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="card-body px-0 pb-2">

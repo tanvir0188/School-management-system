@@ -59,3 +59,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/admin-sign-in', function () {
     return view('public.admin-sign-in');
 })->name('admin-sign-in');
+
+
+
+
+
+Route::get('/student-login', function () {
+    return view('public.student-login');
+})->name('student-login');
+
+Route::prefix('student')->name('student.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('student.dashboard');
+    })->name('dashboard');
+});

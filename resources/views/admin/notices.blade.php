@@ -65,7 +65,7 @@
         </div>
         <div id="paginationLinks" class="mt-3"></div>
 
-        <div id="showNotice" class="col-lg mb-md-0 mb-4">
+        <div id="showNotice" class="col-lg mx-4 mb-md-0 mb-4">
             
         </div>
 
