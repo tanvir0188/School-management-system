@@ -99,7 +99,7 @@ class SectionController extends Controller
             ], 422);
         }
         try {
-            $section = Section::create([
+            Section::create([
                 'name' => $request->name,
                 'class_id' => $request->class_id,
                 'teacher_id' => $request->teacher_id,

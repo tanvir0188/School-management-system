@@ -75,16 +75,12 @@ class TeacherAuthController extends Controller
                 $classId = $section->class->id;
                 $className = $section->class->name;
 
+
                 if (!isset($classes[$classId])) {
                     $classes[$classId] = [
                         'class_name' => $className,
-                        'sections' => []
+                        'section' => $section->name
                     ];
-                }
-
-                // Add section name if not duplicate
-                if (!in_array($section->name, $classes[$classId]['sections'])) {
-                    $classes[$classId]['sections'][] = $section->name;
                 }
             }
         }
