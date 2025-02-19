@@ -50,6 +50,59 @@ class TeacherAuthController extends Controller
             'token' => $token,
         ]);
     }
+    public function getLoginInfos($id)
+    {
+        $teacher = Teacher::with(['profile', 'section.class'])->find($id);
+
+        if (!$teacher) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Teacher not found',
+            ], 404);
+        }
+
+        $classes = [];
+        $hasDesignatedSections = false;
+
+        // Process sections only if they exist
+        if ($teacher->section->isNotEmpty()) {
+            $hasDesignatedSections = true;
+
+            foreach ($teacher->section as $section) {
+                // Skip sections without a valid class relationship
+                if (!$section->class) continue;
+
+                $classId = $section->class->id;
+                $className = $section->class->name;
+
+                if (!isset($classes[$classId])) {
+                    $classes[$classId] = [
+                        'class_name' => $className,
+                        'sections' => []
+                    ];
+                }
+
+                // Add section name if not duplicate
+                if (!in_array($section->name, $classes[$classId]['sections'])) {
+                    $classes[$classId]['sections'][] = $section->name;
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'has_designated_sections' => $hasDesignatedSections,
+                'classes' => $classes ?: null,
+                'teacher_profile' => $teacher->profile ?? null
+            ]
+        ]);
+    }
+
+
+
+
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -57,44 +110,6 @@ class TeacherAuthController extends Controller
         return response()->json([
             'message' => 'Logged out successfully',
             'status' => true,
-        ], 200);
-    }
-
-    public function students()
-    {
-        // Only retrieve 'name' and 'email' fields for all students
-        $students['students'] = Student::select('name', 'email')
-            ->orderBy('name', 'asc')
-            ->paginate(10);
-
-        if ($students['students']->count() > 0) {
-            return response()->json([
-                'status' => true,
-                'students' => $students,
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => false,
-            'message' => 'No student users found',
-        ], 404);
-    }
-
-    public function showStudent($id)
-    {
-        // Only retrieve 'name' and 'email' fields for a specific student
-        $student = Student::select('name', 'email')->find($id);
-
-        if (!$student) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Student not found',
-            ], 404); // 404 Not Found
-        }
-
-        return response()->json([
-            'status' => true,
-            'student' => $student,
         ], 200);
     }
 }

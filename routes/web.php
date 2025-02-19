@@ -94,3 +94,14 @@ Route::prefix('student')->name('student.')->group(function () {
         return view('student.exams');
     })->name('exams');
 });
+
+
+Route::get('/teacher-login', function () {
+    return view('public.teacher-login');
+})->name('teacher-login');
+
+Route::prefix('teacher')->name('teacher.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('teacher.dashboard');
+    })->name('dashboard');
+});

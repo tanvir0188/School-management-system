@@ -128,6 +128,7 @@ Route::group(['prefix' => 'teacher', 'middleware' => 'auth:sanctum:api-teacher']
     Route::post('teacherProfile/store', [TeacherProfileController::class, 'store']);
     Route::put('teacherProfile/{id}', [TeacherProfileController::class, 'update']);
 
+    Route::get('getLoginInfos/{id}', [TeacherAuthController::class, 'getLoginInfos']);
     Route::post('section-notice', [SectionNoticeController::class, 'store']);
     Route::put('section-notice/{id}', [SectionNoticeController::class, 'update']);
     Route::delete('section-notice/{id}', [SectionNoticeController::class, 'destroy']);

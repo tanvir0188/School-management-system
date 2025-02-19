@@ -21,4 +21,8 @@ class Teacher extends Model
     {
         return $this->hasMany(Section::class, 'teacher_id', 'id'); //id of teachers table will be matched against teacher_id of section table
     }
+    public function profile()
+    {
+        return $this->hasOne(TeacherProfile::class);
+    }
 }

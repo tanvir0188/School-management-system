@@ -19,4 +19,8 @@ class TeacherProfile extends Model
         'description',
         'position',
     ];
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
 }
