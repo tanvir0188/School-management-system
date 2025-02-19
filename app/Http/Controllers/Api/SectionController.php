@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Section;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -38,6 +39,37 @@ class SectionController extends Controller
             'message' => 'No sections found'
         ], 404);
     }
+    public function studentsBySection($id)
+    {
+        $students = Student::with('profile') // Load student profile data
+            ->where('sec_id', $id)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        if ($students->isNotEmpty()) {
+            return response()->json([
+                'status' => true,
+                'students' => $students->map(function ($student) {
+                    return [
+                        'id' => $student->id,
+                        'name' => $student->name,
+                        'email' => $student->email,
+                        'full_name' => $student->profile->full_name ?? null,
+                        'photo' => $student->profile->photo ?? null,
+                        'phone_number' => $student->profile->phone_number ?? null,
+                        'address' => $student->profile->address ?? null,
+                    ];
+                }),
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No students found for this section'
+        ], 404);
+    }
+
+
     public function store(Request $request)
     {
         $validateSection = Validator::make(

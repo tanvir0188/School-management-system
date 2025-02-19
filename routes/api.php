@@ -113,6 +113,8 @@ Route::group(['prefix' => 'student', 'middleware' => 'auth:sanctum:api-student']
     Route::get('getLoginInfos/{id}', [StudentAuthController::class, 'getLoginInfos']);
     Route::get('/teacher/index', [AdminAuthController::class, 'teachers']);
     Route::get('/section-notices/{id}', [SectionNoticeController::class, 'indexBySection']);
+    Route::get('/section-students/{id}', [SectionController::class, 'studentsBySection']);
+    Route::get('/exams/{id}', [ExamResultController::class, 'resultByStudent']);
 });
 
 // Teacher Routes

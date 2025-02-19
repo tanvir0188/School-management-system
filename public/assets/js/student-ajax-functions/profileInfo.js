@@ -20,6 +20,7 @@ $(document).ready(function () {
                     // Set profile photo
                     let photoUrl = profile.photo ? `/students/${profile.photo}` : `/media/nullPic.webp`;
                     $("#profilePhoto").attr("src", photoUrl);
+                    
 
                     // Set profile information
                     $("#student_id").text(student.student_id);

@@ -78,7 +78,7 @@ class ExamResultController extends Controller
                 'exams.exam_date'
             )
             ->whereNotNull('sections.name')
-            ->whereNotNull('students.student_id')
+            ->whereNotNull('students.id')
             ->orderBy('exams.exam_date', 'desc');
 
         // Add search functionality
@@ -114,6 +114,74 @@ class ExamResultController extends Controller
             'message' => 'No results found',
         ], 404);
     }
+    public function resultByStudent($id)
+    {
+        // Build a derived table that computes the highest marks per exam
+        $highestMarksQuery = DB::table('exams_results')
+            ->select('exam_id', DB::raw('IFNULL(MAX(marks), "Pending") as highest'))
+            ->groupBy('exam_id');
+
+        // Main query to get the student's exam results, joining the derived table for highest marks
+        $results = DB::table('exams')
+            ->join('exam_types', 'exams.exam_type_id', '=', 'exam_types.id')
+            ->join('classes', 'exams.class_id', '=', 'classes.id')
+            ->leftJoin('sections', 'classes.id', '=', 'sections.class_id')
+            ->leftJoin('students', function ($join) {
+                $join->on('students.class_id', '=', 'classes.id')
+                    ->on('students.sec_id', '=', 'sections.id');
+            })
+            ->leftJoin('exams_results', function ($join) {
+                $join->on('exams_results.exam_id', '=', 'exams.id')
+                    ->on('exams_results.student_id', '=', 'students.id');
+            })
+            ->leftJoinSub($highestMarksQuery, 'highest_marks', function ($join) {
+                $join->on('exams.id', '=', 'highest_marks.exam_id');
+            })
+            ->select(
+                'exam_types.name as exam_type_name',
+                'exams.subject',
+                'exams.full_marks',
+                'exams_results.id as result_id',
+                DB::raw('IFNULL(exams_results.marks, "Pending") as marks'),
+                'exams.exam_date',
+                'highest_marks.highest',
+                'exams.id as exam_id'
+            )
+            ->where('students.id', $id) // Filter by student ID
+            ->whereNotNull('sections.name')
+            ->whereNotNull('students.student_id')
+            ->orderBy('exams.exam_date', 'desc')
+            ->get();
+
+        if ($results->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No results found for the student',
+            ], 404);
+        }
+
+        // Format the results grouped by exam type name
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[$result->exam_type_name][] = [
+                'subject'    => $result->subject,
+                'full_marks' => $result->full_marks,
+                'result_id'  => $result->result_id,
+                'marks'      => $result->marks,
+                'highest'    => $result->highest,
+                'exam_date'  => $result->exam_date,
+            ];
+        }
+
+        return response()->json([
+            'status'  => true,
+            'results' => $formattedResults,
+        ], 200);
+    }
+
+
+
+
 
     // public function getExamResultsBySubject(Request $request, $subject)
     // {

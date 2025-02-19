@@ -76,7 +76,7 @@
                                         <div class="col-md-12">
                                             <label for="photo" class="form-label">Upload Photo</label>
                                             <input type="file" id="photo" name="photo" class="form-control"
-                                                accept="image/*">
+                                                accept="image/*" required>
                                         </div>
                                     </div>
 

@@ -50,7 +50,7 @@ $(document).ready(function () {
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="text-end">
                                     <span class="text-xs">${formattedDate}</span>
                                 </td>
                             </tr>

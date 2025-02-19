@@ -15,12 +15,12 @@
             <ul class="navbar-nav  justify-content-end">
 
                 <li class="nav-item d-flex align-items-center">
-                    Welcome, &nbsp; <span class="text-secondary font-weight-bold studentName"></span>
+                    Welcome, &nbsp; <span class="studentName text-secondary font-weight-bold"></span>
                 </li>
 
 
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                    <a href class="nav-link text-body p-0" id="iconNavbarSidenav">
+                    <a href="#" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
                             <i class="sidenav-toggler-line"></i>
@@ -37,14 +37,6 @@
                         <li><a class="dropdown-item" href="{{route('student.profile')}}">View Profile</a></li>
                         <li><a class="dropdown-item" href="#" onclick="logoutStudent()">Logout</a></li>
                     </ul>
-                </li>
-
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bell cursor-pointer"></i>
-                    </a>
-
                 </li>
             </ul>
         </div>
