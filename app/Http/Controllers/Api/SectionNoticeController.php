@@ -36,6 +36,36 @@ class SectionNoticeController extends Controller
             'message' => 'No announcements yet',
         ], 404);
     }
+    public function indexBySection($id)
+    {
+        // Check if the section exists
+        $section = Section::find($id);
+        if (!$section) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Section not found',
+            ], 404);
+        }
+
+        // Get all notices for the given section ID
+        $sectionNotices = SectionNotice::where('sec_id', $id)->paginate(5);
+
+        // Check if notices exist
+        if ($sectionNotices->isEmpty()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No notices found for this section',
+            ], 404);
+        }
+
+        // Return the notices
+        return response()->json([
+            'status' => true,
+            'notices' => $sectionNotices,
+            'noticeCount' => $sectionNotices->count(),
+        ], 200);
+    }
+
     public function show($id)
     {
         $sectionNotice = SectionNotice::with(['section.class'])->find($id);

@@ -27,7 +27,7 @@ $(document).ready(function () {
                     let teachers = response.teachers.teachers.data;
                     let teacherTable = $("#teacherData");
                     teacherTable.empty();
-                    $("#teacherCount").text(teachers.length);
+                    $("#teacherCount").text(response.teacherCount);
 
                     $.each(teachers, function (index, teacher) {
                         let row = `

@@ -187,6 +187,7 @@ class AdminAuthController extends Controller
             return response()->json([
                 'status' => true,
                 'teachers' => $teachers,
+                'teacherCount' => $teachers['teachers']->total(),
             ], 200);
         }
 

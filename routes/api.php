@@ -112,6 +112,7 @@ Route::group(['prefix' => 'student', 'middleware' => 'auth:sanctum:api-student']
     Route::put('studentProfile/{id}', [StudentProfileController::class, 'update']);
     Route::get('getLoginInfos/{id}', [StudentAuthController::class, 'getLoginInfos']);
     Route::get('/teacher/index', [AdminAuthController::class, 'teachers']);
+    Route::get('/section-notices/{id}', [SectionNoticeController::class, 'indexBySection']);
 });
 
 // Teacher Routes

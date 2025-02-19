@@ -17,6 +17,7 @@ class NoticeController extends Controller
             return response()->json([
                 'status' => true,
                 'notices' => $notices,
+                'noticeCount' => $notices['notices']->total(),
             ], 200);
         }
         return response()->json([
