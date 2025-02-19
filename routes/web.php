@@ -81,4 +81,7 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/update-profile', function () {
         return view('student.update-profile');
     })->name('update-profile');
+    Route::get('/teachers', function () {
+        return view('student.teachers');
+    })->name('teachers');
 });

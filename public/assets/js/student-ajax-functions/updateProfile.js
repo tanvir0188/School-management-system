@@ -36,7 +36,6 @@ $(document).ready(function () {
 
 $("#studentProfileForm").submit(function (e) {
     e.preventDefault();
-    
     let studentToken = localStorage.getItem("student_token");
     let studentId = $("#student_id").val();
 
