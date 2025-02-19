@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\StudentProfile;
 use App\Http\Controllers\Controller;
@@ -70,7 +71,7 @@ class StudentProfileController extends Controller
     }
     public function show($id)
     {
-        $studentProfile = StudentProfile::find($id);
+        $studentProfile = StudentProfile::where('student_id', $id)->first();
         if (!$studentProfile) {
             return response()->json([
                 'status' => false,
@@ -108,7 +109,7 @@ class StudentProfileController extends Controller
             ], 422); // Unprocessable Entity
         }
 
-        $studentProfile = StudentProfile::find($id);
+        $studentProfile = StudentProfile::where('student_id', $id)->first();
         if (!$studentProfile) {
             return response()->json([
                 'status' => false,

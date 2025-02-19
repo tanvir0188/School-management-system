@@ -21,8 +21,10 @@
         @include('student.components.navbar')
         <div class="container-fluid py-4">
             <section class="vh-100" style="background-color: #f4f5f7;">
+                <div class="d-flex justify-content-center" id="createProfile"><a href="{{route('student.create-profile')}}" class="btn btn-primary">Create your profile</a></div>
                 
-                <div class="row d-flex justify-content-center h-100">
+                
+                <div class="row d-flex justify-content-center h-100" id="profile">
                     <div class="col col-lg-6 mb-4 mb-lg-0">
                         <div class="card mb-3" style="border-radius: .5rem;">
                             <div class="row g-0">
@@ -32,7 +34,7 @@
                                     <h5 id="fullName"></h5>
                                     <p><b>Student ID:&nbsp;</b><span id="student_id"></span></p>
                                     <p><b>Age:&nbsp;</b><span id="age"></span></p>
-                                    <a href="{{route('student.create-profile')}}"><i title="Edit profile" class="far fa-edit mb-5"></i></a>
+                                    <a href="{{route('student.update-profile')}}"><i title="Edit profile" id="editButton" class="far fa-edit mb-5"></i></a>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body p-4">

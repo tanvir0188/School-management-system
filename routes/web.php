@@ -78,4 +78,7 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/create-profile', function () {
         return view('student.create-profile');
     })->name('create-profile');
+    Route::get('/update-profile', function () {
+        return view('student.update-profile');
+    })->name('update-profile');
 });

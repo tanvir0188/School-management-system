@@ -30,49 +30,56 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="full_name" class="form-label">Full Name</label>
-                                            <input type="text" id="full_name" data-id="" name="full_name" class="form-control" required>
+                                            <input type="text" id="full_name" data-id="" name="full_name"
+                                                class="form-control" required>
                                         </div>
-                                        
-                                            <input type="hidden" id="student_id" name="student_id" class="form-control" required>
-                                        
+
+                                        <input type="hidden" id="student_id" name="student_id" class="form-control"
+                                            required>
+
                                     </div>
-            
+
                                     <div class="row mt-3">
                                         <div class="col-md-6">
                                             <label for="phone_number" class="form-label">Phone Number</label>
-                                            <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+                                            <input type="text" id="phone_number" name="phone_number"
+                                                class="form-control" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="age" class="form-label">Age</label>
-                                            <input type="number" id="age" name="age" class="form-control" min="6" required>
+                                            <input type="number" id="age" name="age" class="form-control"
+                                                min="6" required>
                                         </div>
                                     </div>
-            
+
                                     <div class="row mt-3">
                                         <div class="col-md-6">
                                             <label for="father_name" class="form-label">Father's Name</label>
-                                            <input type="text" id="father_name" name="father_name" class="form-control">
+                                            <input type="text" id="father_name" name="father_name"
+                                                class="form-control">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="mother_name" class="form-label">Mother's Name</label>
-                                            <input type="text" id="mother_name" name="mother_name" class="form-control">
+                                            <input type="text" id="mother_name" name="mother_name"
+                                                class="form-control">
                                         </div>
                                     </div>
-            
+
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <label for="address" class="form-label">Address</label>
                                             <textarea id="address" name="address" class="form-control" rows="2" required></textarea>
                                         </div>
                                     </div>
-            
+
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <label for="photo" class="form-label">Upload Photo</label>
-                                            <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
+                                            <input type="file" id="photo" name="photo" class="form-control"
+                                                accept="image/*">
                                         </div>
                                     </div>
-            
+
                                     <div class="text-center mt-4">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
