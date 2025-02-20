@@ -150,6 +150,7 @@ class TeacherProfileController extends Controller
             $teacherProfile->photo = null; // Set the photo column to null
         }
         $teacherProfile->save();
+
         return response()->json([
             'status' => true,
             'message' => 'Teacher profile updated successfully',
