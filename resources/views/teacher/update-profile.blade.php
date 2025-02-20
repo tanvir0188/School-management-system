@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Create Profile')</title>
+    <title>@yield('title', 'Update Profile')</title>
     @include('components.stylelinks')
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.2.0/mdb.min.css" rel="stylesheet" />
@@ -15,9 +15,9 @@
 <body class="g-sidenav-show bg-gray-100">
     @include('teacher.components.sidebar')
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        @section('breadcrumb', 'Create Profile')
+        @section('breadcrumb', 'Update Profile')
 
-        @section('page-title', 'Create Profile')
+        @section('page-title', 'Update Profile')
         @include('teacher.components.navbar')
         <div class="container-fluid py-4">
             <section class="vh-100" style="background-color: #f4f5f7;">
@@ -100,7 +100,7 @@
     </main>
     @include('components.admin-scripts')
     <script src="{{ asset('assets/js/teacher-ajax-functions/redirect.js') }}"></script>
-    <script src="{{ asset('assets/js/teacher-ajax-functions/createProfile.js') }}"></script>
+    <script src="{{ asset('assets/js/teacher-ajax-functions/updateProfile.js') }}"></script>
     <script src="{{ asset('assets/js/public-ajax-functions/toastr.js') }}"></script>
 </body>
 

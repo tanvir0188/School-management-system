@@ -34,7 +34,7 @@
                         <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
-                        <li><a class="dropdown-item" href="">View Profile</a></li>
+                        <li><a class="dropdown-item" href="{{route('teacher.profile')}}">View Profile</a></li>
                         <li><a class="dropdown-item" href="#" onclick="logoutTeacher()">Logout</a></li>
                     </ul>
                 </li>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->integer('age')->nullable();
             $table->string('description')->nullable();
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->timestamps();
         });
     }

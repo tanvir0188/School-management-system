@@ -111,4 +111,13 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/notices', function () {
         return view('teacher.notices');
     })->name('notices');
+    Route::get('/create-profile', function () {
+        return view('teacher.create-profile');
+    })->name('create-profile');
+    Route::get('/profile', function () {
+        return view('teacher.profile');
+    })->name('profile');
+    Route::get('/update-profile', function () {
+        return view('teacher.update-profile');
+    })->name('update-profile');
 });

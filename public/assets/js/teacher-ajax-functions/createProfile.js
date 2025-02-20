@@ -1,44 +1,44 @@
 $(document).ready(function () {
-    let studentToken = localStorage.getItem("student_token");
+    let teacherToken = localStorage.getItem("teacher_token");
     
-    if (!studentToken) {
-        toastr.error("Unauthorized access. Student token is missing.");
+    if (!teacherToken) {
+        toastr.error("Unauthorized access. Teacher token is missing.");
         return;
     }
-    let studentInfo = localStorage.getItem("student"); // Assuming you store it somewhere
-    let student = JSON.parse(studentInfo);
-    let studentId = student.id;
-    if (studentId) {
-        $("#student_id").val(studentId);
+    let teacherInfo = localStorage.getItem("teacher"); // Assuming you store it somewhere
+    let teacher = JSON.parse(teacherInfo);
+    let teacherId = teacher.id;
+    if (teacherId) {
+        $("#teacher_id").val(teacherId);
     } else {
-        toastr.error("Student ID is missing.");
+        toastr.error("Teacher ID is missing.");
         return;
     }
-    $("#studentProfileForm").submit(function (e) {
+    $("#teacherProfileForm").submit(function (e) {
         e.preventDefault(); // Prevent default form submission
 
         let formData = new FormData(this);
 
         $.ajax({
-            url: `http://127.0.0.1:8000/api/student/studentProfile/store`,
+            url: `http://127.0.0.1:8000/api/teacher/teacherProfile/store`,
             type: "POST",
             data: formData,
             processData: false,
             contentType: false,
             headers: {
-                "Authorization": "Bearer " + studentToken
+                "Authorization": "Bearer " + teacherToken
             },
             success: function (response) {
                 if (response.status) {
                     sessionStorage.setItem("successMessage", response.message);
-                    let studentLoginInfo = localStorage.getItem("student_login_info");
-                    if (studentLoginInfo) {
-                        studentLoginInfo = JSON.parse(studentLoginInfo);
-                        studentLoginInfo.student_profile = response.studentProfile; // Update profile
-                        localStorage.setItem("student_login_info", JSON.stringify(studentLoginInfo));
+                    let teacherLoginInfo = localStorage.getItem("teacher_login_info");
+                    if (teacherLoginInfo) {
+                        teacherLoginInfo = JSON.parse(teacherLoginInfo);
+                        teacherLoginInfo.teacher_profile = response.teacherProfile; // Update profile
+                        localStorage.setItem("teacher_login_info", JSON.stringify(teacherLoginInfo));
                     }
 
-                    window.location.href = "/student/profile";
+                    window.location.href = "/teacher/profile";
                 } else {
                     toastr.warning(response.message);
                 }

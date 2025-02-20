@@ -39,7 +39,7 @@ class TeacherProfileController extends Controller
                 'mother_name' => 'nullable',
                 'photo' =>  'nullable|mimes:jpg,jpeg,png,gif',
                 'description' => 'nullable|min:20',
-                'position' => 'required',
+                'position' => 'nullable',
 
             ]
         );
@@ -103,7 +103,7 @@ class TeacherProfileController extends Controller
                 'mother_name' => 'nullable',
                 'photo' =>  'nullable|mimes:jpg,jpeg,png,gif',
                 'description' => 'nullable|min:20',
-                'position' => 'required',
+                'position' => 'nullable',
 
             ]
         );
@@ -114,7 +114,7 @@ class TeacherProfileController extends Controller
                 'errors' => $teacherProfileValidator->errors()->all(),
             ], 422); // Unprocessable Entity
         }
-        $teacherProfile = TeacherProfile::find($id);
+        $teacherProfile = TeacherProfile::where('teacher_id', $id)->first();
         if (!$teacherProfile) {
             return response()->json([
                 'status' => false,
@@ -153,13 +153,13 @@ class TeacherProfileController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Teacher profile updated successfully',
-            'data' => $teacherProfile,
+            'teacherProfile' => $teacherProfile,
         ], 200); // OK
     }
 
     public function show($id)
     {
-        $teacherProfile = TeacherProfile::find($id);
+        $teacherProfile = TeacherProfile::where('teacher_id', $id)->first();
         if (!$teacherProfile) {
             return response()->json([
                 'status' => false,
