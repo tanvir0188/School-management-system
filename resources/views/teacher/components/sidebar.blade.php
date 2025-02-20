@@ -3,14 +3,14 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="#" target="_blank">
         <img src="{{asset('media/nullPic.webp')}}" class="navbar-brand-img profilePhoto" alt="main_logo">
-        <span class="ms-1 font-weight-bold studentName"></span>
+        <span class="ms-1 font-weight-bold teacherName"></span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('student.dashboard') ? 'active' : '' }}" href="{{ route('student.dashboard') }}">
+          <a class="nav-link {{ request()->routeIs('teacher.dashboard') ? 'active' : '' }}" href="{{ route('teacher.dashboard') }}">
 
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -31,34 +31,36 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('student.teachers') ? 'active' : '' }}" href="{{ route('student.teachers') }}">
+          <a class="nav-link {{ request()->routeIs('teacher.teachers') ? 'active' : '' }}" href="{{ route('teacher.teachers') }}">
 
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-chalkboard-teacher" style="color: {{request()->routeIs('student.teachers') ? 'white':'black'}};"></i>
+              <i class="fas fa-chalkboard-teacher" style="color: {{request()->routeIs('teacher.teachers') ? 'white':'black'}};"></i>
             </div>
             <span class="nav-link-text ms-1">Teachers</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('student.notices') ? 'active' : '' }}" href="{{ route('student.notices') }}">
+          <a class="nav-link {{ request()->routeIs('teacher.notices') ? 'active' : '' }}" href="{{ route('teacher.notices') }}">
 
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-bullhorn" style="color: {{request()->routeIs('student.notices') ? 'white':'black'}};"></i>
+              <i class="fas fa-bullhorn" style="color: {{request()->routeIs('teacher.notices') ? 'white':'black'}};"></i>
             </div>
             <span class="nav-link-text ms-1">Announcements</span>
           </a>
         </li>
+
+        {{-- 
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('student.section-students') ? 'active' : '' }}" href="{{ route('student.section-students') }}">
+          <a class="nav-link {{ request()->routeIs('teacher.section-teachers') ? 'active' : '' }}" href="{{ route('teacher.section-teachers') }}">
 
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-users" style="color: {{request()->routeIs('student.section-students') ? 'white':'black'}};"></i>
+              <i class="fas fa-users" style="color: {{request()->routeIs('teacher.section-teachers') ? 'white':'black'}};"></i>
             </div>
             <span class="nav-link-text ms-1">Your Classmates</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('student.exams') ? 'active' : '' }}" href="{{ route('student.exams') }}">
+          <a class="nav-link {{ request()->routeIs('teacher.exams') ? 'active' : '' }}" href="{{ route('teacher.exams') }}">
 
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -77,7 +79,7 @@
             </div>
             <span class="nav-link-text ms-1">Exams</span>
           </a>
-        </li>
+        </li> --}}
 
       </ul>
     </div>

@@ -123,11 +123,11 @@ Route::post('/teacher/login', [TeacherAuthController::class, 'login']); // Publi
 Route::group(['prefix' => 'teacher', 'middleware' => 'auth:sanctum:api-teacher'], function () {
     // Add protected routes for teachers here
     Route::post('logout', [TeacherAuthController::class, 'logout']); // Protected
-    Route::get('/student/index', [TeacherAuthController::class, 'students']);
+
     Route::get('/student/{id}', [TeacherAuthController::class, 'showStudent']);
     Route::post('teacherProfile/store', [TeacherProfileController::class, 'store']);
     Route::put('teacherProfile/{id}', [TeacherProfileController::class, 'update']);
-
+    Route::get('/teacher/index', [AdminAuthController::class, 'teachers']);
     Route::get('getLoginInfos/{id}', [TeacherAuthController::class, 'getLoginInfos']);
     Route::post('section-notice', [SectionNoticeController::class, 'store']);
     Route::put('section-notice/{id}', [SectionNoticeController::class, 'update']);

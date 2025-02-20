@@ -104,4 +104,11 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/dashboard', function () {
         return view('teacher.dashboard');
     })->name('dashboard');
+    Route::get('/teachers', function () {
+        return view('teacher.teachers');
+    })->name('teachers');
+
+    Route::get('/notices', function () {
+        return view('teacher.notices');
+    })->name('notices');
 });

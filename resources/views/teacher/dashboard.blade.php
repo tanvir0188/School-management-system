@@ -7,6 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Dashboard')</title>
     @include('components.stylelinks')
+    <style>
+        .card:hover {
+            background-color:  var(--bs-primary) !important;
+            /* Bootstrap primary color */
+            transform: translateY(-5px);
+            /* Slight lift effect */
+        }
+    </style>
 
 </head>
 
@@ -24,7 +32,7 @@
     </main>
     @include('components.admin-scripts')
     <script src="{{ asset('assets/js/teacher-ajax-functions/redirect.js') }}"></script>
-    <script src="{{ asset('assets/js/teacher-ajax-functions/cardInfos.js') }}"></script>
+    <script src="{{ asset('assets/js/teacher-ajax-functions/dashboard.js') }}"></script>
 
 
 

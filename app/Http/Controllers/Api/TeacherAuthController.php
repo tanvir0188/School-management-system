@@ -79,7 +79,8 @@ class TeacherAuthController extends Controller
                 if (!isset($classes[$classId])) {
                     $classes[$classId] = [
                         'class_name' => $className,
-                        'section' => $section->name
+                        'section' => $section->name,
+                        'sectionId' => $section->id
                     ];
                 }
             }
