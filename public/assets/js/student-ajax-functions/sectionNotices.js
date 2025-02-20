@@ -30,7 +30,6 @@ $(document).ready(function () {
                 if (response.status) {
                     // Assuming the paginated notices data is returned in response.notices
                     let notices = response.notices.data;
-                    console.log(response);
                     // If you have a notice count, update a designated element (e.g., #sectionNoticeCount)
                     $("#sectionNoticeCount").text(response.noticeCount);
 

@@ -120,4 +120,8 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/update-profile', function () {
         return view('teacher.update-profile');
     })->name('update-profile');
+
+    Route::get('/section-students/{class}/{section}/{id}', function () {
+        return view('teacher.section-students');
+    })->name('section-students');
 });

@@ -48,7 +48,7 @@ class SectionNoticeController extends Controller
         }
 
         // Get all notices for the given section ID
-        $sectionNotices = SectionNotice::where('sec_id', $id)->paginate(5);
+        $sectionNotices = SectionNotice::where('sec_id', $id)->orderBy('created_at', 'desc')->paginate(5);
 
         // Check if notices exist
         if ($sectionNotices->isEmpty()) {
@@ -62,7 +62,7 @@ class SectionNoticeController extends Controller
         return response()->json([
             'status' => true,
             'notices' => $sectionNotices,
-            'noticeCount' => $sectionNotices->count(),
+            'noticeCount' => $sectionNotices->total(),
         ], 200);
     }
 
@@ -131,39 +131,21 @@ class SectionNoticeController extends Controller
 
     public function store(Request $request)
     {
-        $teacher = Auth::guard('sanctum:api-teacher')->user();
-        if (!$teacher) {
-            return response()->json([
-                'status' => false,
-                'error' => 'Unauthorized. Please log in as a teacher.'
-            ], 401);
-        }
-        $teacherSectionIds = Section::where('teacher_id', $teacher->id)->pluck('id')->toArray();
+        // Validate the request
+        $request->validate([
+            'sec_id' => 'required|integer|exists:sections,id', // Ensure sec_id is valid
+            'title' => 'required|string|max:255', // Ensure title is not empty
+            'content' => 'required', // Ensure content is not empty
+        ]);
 
-        $sectionNoticesValidator = Validator::make(
-            $request->all(),
-            [
-                'sec_id' => ['required', 'integer', function ($attribute, $value, $fail) use ($teacherSectionIds) {
-                    if (!in_array($value, $teacherSectionIds)) {
-                        $fail('Unauthorized. You can only post notices for sections you teach.');
-                    }
-                }],
-                'title' => 'required|string|max:255',
-                'content' => 'required|string',
-            ]
-        );
-        if ($sectionNoticesValidator->fails()) {
-            return response()->json([
-                'status' => false,
-                'error' => $sectionNoticesValidator->errors(),
-            ], 422);
-        }
         try {
+            // Create the section notice
             $sectionNotice = SectionNotice::create([
                 'sec_id' => $request->sec_id,
                 'title' => $request->title,
                 'content' => $request->content,
             ]);
+
             return response()->json([
                 'status' => true,
                 'message' => 'Notice posted successfully',
@@ -172,7 +154,7 @@ class SectionNoticeController extends Controller
         } catch (\Exception $th) {
             return response()->json([
                 'status' => false,
-                'error' => $th->getMessage(),
+                'error' => 'Failed to post notice. Please try again later.',
             ], 500);
         }
     }
