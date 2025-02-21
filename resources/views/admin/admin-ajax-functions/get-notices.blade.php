@@ -50,7 +50,7 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <a class="text-dark show-notice" href="#" data-id="${notice.id}">
-                                                <h6 class="mb-0 text-sm" data-toggle="tooltip" data-placement="right" title="Show notice">${notice.title}</h6>
+                                                <h6 class="mb-0 text-sm" data-toggle="tooltip" data-placement="right" title="Show notice">${notice.title}</h6>z
                                                 </a>
                                             </div>
                                         </div>
@@ -59,10 +59,10 @@
                                         <span class="text-xs">${formattedDate}</span>
                                     </td>
                                     <td>
-                                <a href="#" class="text-danger delete-notice" data-id="${notice.id}">
-                                    <span class="badge bg-danger"><i class="fa-solid fa-trash"></i></span>
-                                </a>
-                            </td>
+                                        <a href="#" class="text-danger delete-notice" data-id="${notice.id}">
+                                            <span class="badge bg-danger"><i class="fa-solid fa-trash"></i></span>
+                                        </a>
+                                    </td>
                                 </tr>
                             `;
                             noticeTable.append(row);

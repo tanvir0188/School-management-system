@@ -11,8 +11,6 @@ $(document).ready(function () {
     let urlParts = url.split('/');
     let sectionId = urlParts[urlParts.length - 1];
 
-    console.log('sectionId: ' + sectionId);
-
     let currentSectionId = sectionId;
     if (!currentSectionId) {
         toastr.error("Section ID is missing.");
@@ -33,7 +31,7 @@ $(document).ready(function () {
                 if (response.status) {
                     // Assuming the paginated notices data is returned in response.notices
                     let notices = response.notices.data;
-                    console.log(response);
+                    
                     // If you have a notice count, update a designated element (e.g., #sectionNoticeCount)
                     $("#sectionNoticeCount").text(response.noticeCount);
 
@@ -53,8 +51,16 @@ $(document).ready(function () {
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-end">
+                                    <td class="text-center">
                                         <span class="text-xs">${formattedDate}</span>
+                                    </td>
+                                    <td>
+                                        <button class="text-danger delete-notice" data-id="${notice.id}" style="border: none; background: none; padding: 0;">
+                                            <span class="badge bg-danger"><i class="fa-solid fa-trash"></i></span>
+                                        </button>
+                                        <button class="text-warning update-notice" data-id="${notice.id}" style="border: none; background: none; padding: 0;">
+                                            <span class="badge bg-warning"><i class="fa-solid fa-edit"></i></span>
+                                        </button>
                                     </td>
                                 </tr>
                             `;
@@ -122,23 +128,23 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#createSectionNotice', function () {
-        
+
         $('#sec_id').val(sectionId);
         // Show the modal
         $('#createNotice').modal('show');
     });
     $(document).on("click", "#create", function (e) {
         e.preventDefault();
-    
+
         let secId = $("#sec_id").val();
         let title = $("#title").val();
         let content = $("#content").val();
-    
+
         if (!title || !content) {
             toastr.error("Title and content are required!");
             return;
         }
-    
+
         $.ajax({
             url: "http://127.0.0.1:8000/api/teacher/section-notice/store",
             type: "POST",
@@ -153,7 +159,7 @@ $(document).ready(function () {
                 content: content,
             }),
             success: function (response) {
-                console.log(teacherToken)
+                
                 if (response.status) {
                     toastr.success(response.message);
                     $("#createNotice").modal("hide"); // Close the modal after success
@@ -164,7 +170,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                
+
                 let errorMessage = "Failed to post notice.";
                 if (xhr.responseJSON && xhr.responseJSON.error) {
                     errorMessage = xhr.responseJSON.error;
@@ -173,7 +179,126 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(document).on("click", ".update-notice", function (e) {
+        e.preventDefault(); // Prevent default button behavior
     
+        const noticeId = $(this).data("id"); // Get the notice ID from the data-id attribute   
+        // Fetch the notice details
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/section-notice/${noticeId}`,
+            type: "GET",
+            success: function (response) {
+                if (response.status) {
+                    // Populate the form with the notice data
+                    $("#updateNoticeForm #title").val(response.sectionNotice.title);
+                    $("#updateNoticeForm #content").val(response.sectionNotice.content);
+                    $("#updateNoticeForm #sec_id").val(currentSectionId);
+    
+                    // Store the notice ID in a hidden field for later use
+                    $("#updateNoticeForm").append(`<input type="hidden" id="notice_id" name="notice_id" value="${noticeId}">`);
+    
+                    // Open the modal
+                    $("#updateNotice").modal("show");
+                } else {
+                    toastr.error(response.error || "Failed to fetch notice details.");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                let errorMessage = "Failed to fetch notice details. Please try again later.";
+    
+                // Check if the response contains a JSON message
+                if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                    errorMessage = jqXHR.responseJSON.error;
+                }
+    
+                toastr.error(errorMessage);
+            },
+        });
+    });
+
+    $(document).on("click", "#update", function (e) {
+        e.preventDefault(); 
+        const noticeId = $("#updateNoticeForm #notice_id").val();
+      
+        // Get form data
+        const formData = {
+            sec_id: $("#updateNoticeForm #sec_id").val(),
+            title: $("#updateNoticeForm #title").val(),
+            content: $("#updateNoticeForm #content").val(),
+        };
+    
+        // Send the AJAX request to update the notice
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/teacher/section-notice/${noticeId}`,
+            type: "PUT",
+            headers: {
+                "Authorization": "Bearer " + teacherToken,
+                "Content-Type": "application/json",
+            },
+            data: JSON.stringify(formData),
+            success: function (response) {
+                if (response.status) {
+                    toastr.success(response.message || "Notice updated successfully.");
+                    $("#updateNotice").modal("hide"); // Close the modal
+                    fetchSectionNotices(currentSectionId); // Refresh the notices list
+                } else {
+                    toastr.error(response.error || "Failed to update notice.");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                let errorMessage = "Failed to update notice. Please try again later.";
+    
+                // Check if the response contains a JSON message
+                if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                    errorMessage = jqXHR.responseJSON.error;
+                }
+    
+                toastr.error(errorMessage);
+            },
+        });
+    });
+
+
+    function deleteSectionNotice(noticeId) {
+        // Confirm deletion with the user
+        if (!confirm("Are you sure you want to delete this notice?")) {
+            return;
+        }
+
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/teacher/section-notice/${noticeId}`,
+            type: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + teacherToken,
+            },
+            success: function (response) {
+                if (response.status) {
+                    toastr.success(response.message || "Notice deleted successfully.");
+                    // Refresh the notices list after deletion
+                    fetchSectionNotices(currentSectionId);
+                } else {
+                    toastr.error(response.error || "Failed to delete notice.");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                let errorMessage = "Failed to delete notice. Please try again later.";
+
+                // Check if the response contains a JSON message
+                if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                    errorMessage = jqXHR.responseJSON.error;
+                }
+
+                toastr.error(errorMessage);
+            },
+        });
+    }
+    $(document).on("click", ".delete-notice", function (e) {
+        e.preventDefault(); // Prevent default button behavior
+        const noticeId = $(this).data("id"); // Get the notice ID from the data-id attribute
+        deleteSectionNotice(noticeId); // Call the delete function
+    });
+
 
     $(document).on("click", ".show-section-notice", function (e) {
         e.preventDefault();
@@ -181,8 +306,8 @@ $(document).ready(function () {
         showNotice(noticeId);
     });
 
-    
-    
+
+
 
     // Example function for showing a notice's details (you can adjust as needed)
     function showNotice(noticeId) {
@@ -194,16 +319,16 @@ $(document).ready(function () {
                 if (response.status) {
                     let notice = response.sectionNotice; // or response.notice based on API response
                     let formattedDate = new Date(notice.created_at).toISOString().split("T")[0];
-    
+
                     // Update modal content
                     let noticeHtml = `
                         <h4 class="text-primary">${notice.title}</h4>
                         <p>${notice.content}</p>
                         <small class="text-muted">Posted on: ${formattedDate}</small>
                     `;
-    
+
                     $("#showNotice .modal-body").html(noticeHtml);
-    
+
                     // Show the modal
                     $("#showNotice").modal("show");
                 } else {

@@ -43,6 +43,7 @@ $(document).ready(function() {
                                 <td>
                                     <span class="text-xs">${formattedDate}</span>
                                 </td>
+                                
                             </tr>
                         `;
                         noticeTable.append(row);

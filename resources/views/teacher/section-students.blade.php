@@ -84,7 +84,9 @@
         </div>
         
         @include('teacher.section-notice-modal-form')
+        @include('teacher.section-notice-update-modal')
         @include('teacher.show-notice-modal')
+        
 
     </main>
     @include('components.admin-scripts')

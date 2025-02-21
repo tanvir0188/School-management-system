@@ -29,7 +29,7 @@ $(document).ready(function () {
         },
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            
             if (response.status) {
                 let students = response.students;
                 let tableBody = "";
@@ -64,7 +64,7 @@ $(document).ready(function () {
             }
         },
         error: function (xhr) {
-            console.log(xhr);
+            
             if (xhr.status === 404 && xhr.responseJSON) {
                 $("#studentTable").hide(); // Hide table when no students are found
                 $("#student-card-body").append(`<h5 class="text-center text-danger">${xhr.responseJSON.message}</h5>`);
