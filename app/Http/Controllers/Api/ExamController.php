@@ -29,6 +29,20 @@ class ExamController extends Controller
             'message' => 'No exams found',
         ], 404);
     }
+    public function show($id)
+    {
+        $exam = Exam::find($id);
+        if ($exam) {
+            return response()->json([
+                'status' => true,
+                'exam' => $exam,
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'Exam not found',
+        ], 404);
+    }
     public function getExams(Request $request)
     {
         // Validate the request
@@ -215,6 +229,7 @@ class ExamController extends Controller
             ], 500);
         }
     }
+
     public function examByTypeWithResult($id)
     {
         $examResults = DB::table('exams')

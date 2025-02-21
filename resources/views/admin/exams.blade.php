@@ -66,11 +66,14 @@
             </div>
             <div id="paginationLinks" class="mt-3"></div>
         </div>
+        @include('admin.update-exam-modal')
 
 
     </main>
     @include('components.admin-scripts')
-    @include('admin.admin-ajax-functions.get-exams')
+    <script src="{{ asset('assets/js/ajax-functions/get-exams.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/ajax-functions/update-exams.js') }}"></script> --}}
+    {{-- @include('admin.admin-ajax-functions.get-exams') --}}
     @include('components.admin-auth-redirect')
 
     

@@ -123,6 +123,56 @@ class AdminAuthController extends Controller
             'student' => $student,
         ], 201);
     }
+    public function updateStudentSectionAndClass(Request $request, $student_id)
+    {
+        // Find the student by student_id
+        $student = Student::where('student_id', $student_id)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student not found',
+            ], 404);
+        }
+
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'class_id' => 'required|integer|exists:classes,id',
+            'sec_id' => [
+                'required',
+                'integer',
+                'exists:sections,id',
+                function ($attribute, $value, $fail) use ($request) {
+                    $section = Section::where('id', $value)
+                        ->where('class_id', $request->class_id)
+                        ->exists();
+                    if (!$section) {
+                        $fail('The selected section does not belong to the specified class.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()->all(),
+            ], 422);
+        }
+
+        // Update the student's class_id and sec_id
+        $student->class_id = $request->class_id;
+        $student->sec_id = $request->sec_id;
+        $student->save();
+
+        // Return the updated student
+        return response()->json([
+            'status' => true,
+            'message' => 'Student class and section updated successfully',
+            'student' => $student,
+        ]);
+    }
 
     public function teacherRegister(Request $request)
     {
