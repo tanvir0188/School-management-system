@@ -50,7 +50,7 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <a class="text-dark show-notice" href="#" data-id="${notice.id}">
-                                                <h6 class="mb-0 text-sm" data-toggle="tooltip" data-placement="right" title="Show notice">${notice.title}</h6>z
+                                                <h6 class="mb-0 text-sm" data-toggle="tooltip" data-placement="right" title="Show notice">${notice.title}</h6>
                                                 </a>
                                             </div>
                                         </div>

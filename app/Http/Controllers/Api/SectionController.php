@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Section;
 use App\Models\Student;
+use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -236,5 +237,34 @@ class SectionController extends Controller
             'status' => false,
             'message' => 'Section not found',
         ], 404);
+    }
+
+    public function getAllSectionsAndClassesWithTeachers()
+    {
+        $classes = ClassModel::with('sections.teacher')->get(); // Load sections with their teachers
+
+        $result = [];
+
+        foreach ($classes as $class) {
+            $result[$class->id] = [
+                'class_name' => $class->name,
+                'sections' => []
+            ];
+
+            foreach ($class->sections as $section) {
+                $result[$class->id]['sections'][] = [
+                    'section_name' => $section->name,
+                    'section_id' => $section->id,
+                    'teacher_id' => $section->teacher->id ?? null // Get teacher ID if available
+                ];
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'classes' => $result ?: null
+            ]
+        ]);
     }
 }

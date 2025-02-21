@@ -16,6 +16,7 @@
         @include('components.navbar')
         <div class="container-fluid py-4">
             @include('components.dashboard-cards')
+            <h2>Manage the Class and Sections</h2>
             
             
         </div>

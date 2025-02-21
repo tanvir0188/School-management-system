@@ -140,16 +140,7 @@
             <span class="nav-link-text ms-1">Create section</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('admin.create-notice') ? 'active' : '' }}" href="{{ route('admin.create-notice') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              
-              <i class="fa fa-bell" style="color: {{request()->routeIs('admin.create-notice') ? 'white':'black'}};"></i>
-
-            </div>
-            <span class="nav-link-text ms-1">Create notice</span>
-          </a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.create-exam-type') ? 'active' : '' }}" href="{{ route('admin.create-exam-type') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -158,16 +149,6 @@
 
             </div>
             <span class="nav-link-text ms-1">Create exam type</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('admin.create-exam') ? 'active' : '' }}" href="{{ route('admin.create-exam') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              
-              <i class="fa-solid fa-chalkboard" style="color: {{request()->routeIs('admin.create-exam') ? 'white':'black'}};"></i>
-
-            </div>
-            <span class="nav-link-text ms-1">Create exam</span>
           </a>
         </li>
         <li class="nav-item">

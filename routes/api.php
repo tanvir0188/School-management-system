@@ -78,6 +78,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum:api-admin'], fu
     Route::put('section/update/{id}', [SectionController::class, 'update']);
     Route::delete('section/{id}', [SectionController::class, 'destroy']);
 
+    Route::get('get-section-and-class', [SectionController::class, 'getAllSectionsAndClassesWithTeachers']);
+
 
     Route::post('notice', [NoticeController::class, 'store']);
     Route::put('notice/{id}', [NoticeController::class, 'update']);

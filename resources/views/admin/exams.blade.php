@@ -20,6 +20,7 @@
         <div class="container-fluid py-4">
             <div class="row my-4">
                 <div class="col-lg-8 mb-md-0 mb-4">
+                    <a href="{{route('admin.create-exam')}}" class="btn btn-primary">Create new Exam</a>
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="row">

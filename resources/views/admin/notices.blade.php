@@ -18,8 +18,9 @@
         @section('page-title', 'Notices')
         @include('components.navbar')
         <div class="container-fluid py-4">
-            <div class="row my-4">
+            <div class="row d-flex justify-content-center my-4">
                 <div class="col-lg-6 mb-md-0 mb-4">
+                    <a class="btn btn-primary" href="{{route('admin.create-notice')}}">Create</a>
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="row">
