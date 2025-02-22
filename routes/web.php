@@ -53,6 +53,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/results', function () {
         return view('admin.results');
     })->name('results');
+
+    Route::get('/section/{class}/{section}/{id}', function () {
+        return view('admin.manage-section');
+    })->name('manage-section');
 });
 
 

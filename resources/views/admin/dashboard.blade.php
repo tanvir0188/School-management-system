@@ -7,6 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Dashboard')</title>
     @include('components.stylelinks')
+    <style>
+        /* Add this to your CSS file */
+        .hover-effect {
+            transition: background-color 0.3s ease;
+            /* Smooth transition */
+        }
+
+        .card-link:hover .hover-effect {
+            background-color: var(--bs-primary) !important;
+            /* Change to primary color on hover */
+        }
+    </style>
 
 </head>
 
@@ -16,9 +28,9 @@
         @include('components.navbar')
         <div class="container-fluid py-4">
             @include('components.dashboard-cards')
-            <h2>Manage the Class and Sections</h2>
-            
-            
+
+
+
         </div>
 
     </main>
@@ -32,21 +44,21 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @include('components.admin-auth-redirect')
-    @include('admin.admin-ajax-functions.dashboard-card')
+    <script src="{{ asset('assets/js/ajax-functions/dashboard.js') }}"></script>
 
-    
-    
+
+
     <script>
-    $(document).ready(function() {
-        // ✅ Retrieve the message stored in sessionStorage
-        let successMessage = sessionStorage.getItem("successMessage"); 
-        
-        if (successMessage) {
-            toastr.success(successMessage);
-            sessionStorage.removeItem("successMessage"); 
-        }
-    });
-</script>
+        $(document).ready(function() {
+            // ✅ Retrieve the message stored in sessionStorage
+            let successMessage = sessionStorage.getItem("successMessage");
+
+            if (successMessage) {
+                toastr.success(successMessage);
+                sessionStorage.removeItem("successMessage");
+            }
+        });
+    </script>
 
 
 

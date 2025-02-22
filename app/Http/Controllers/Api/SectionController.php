@@ -241,30 +241,136 @@ class SectionController extends Controller
 
     public function getAllSectionsAndClassesWithTeachers()
     {
-        $classes = ClassModel::with('sections.teacher')->get(); // Load sections with their teachers
+        // Load classes with their sections, teachers, and students
+        $classes = ClassModel::with('sections.teacher', 'sections.students')->get();
 
         $result = [];
 
         foreach ($classes as $class) {
             $result[$class->id] = [
                 'class_name' => $class->name,
-                'sections' => []
+                'sections' => [],
+                'studentCount' => 0, // Initialize total student count for the class
             ];
 
             foreach ($class->sections as $section) {
+                // Count students in the current section
+                $studentCount = $section->students->count();
+
+                // Add section details to the result
                 $result[$class->id]['sections'][] = [
                     'section_name' => $section->name,
                     'section_id' => $section->id,
-                    'teacher_id' => $section->teacher->id ?? null // Get teacher ID if available
+                    'teacher_id' => $section->teacher->id ?? null,
+                    'teacher_name' => $section->teacher->name ?? null,
+                    'student_count' => $studentCount, // Add student count for the section
                 ];
+
+                // Add the section's student count to the total student count for the class
+                $result[$class->id]['studentCount'] += $studentCount;
             }
         }
 
         return response()->json([
             'status' => true,
             'data' => [
-                'classes' => $result ?: null
+                'classes' => $result ?: null,
+            ],
+        ], 200);
+    }
+    public function teacherAndstudentsBySection($id)
+    {
+        // Load section with teacher and students
+        $section = Section::with(['teacher.profile', 'students.profile'])->find($id);
+
+        if (!$section) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Section not found'
+            ], 404);
+        }
+
+        // Get teacher details
+        $teacher = $section->teacher;
+        $teacherName = $teacher ? ($teacher->profile->full_name ?? $teacher->name) : 'No teacher assigned';
+
+        // Get students list
+        $students = $section->students->map(function ($student) {
+            return [
+                'id' => $student->id,
+                'name' => $student->name,
+                'email' => $student->email,
+                'full_name' => $student->profile->full_name ?? null,
+                'photo' => $student->profile->photo ?? null,
+                'phone_number' => $student->profile->phone_number ?? null,
+                'address' => $student->profile->address ?? null,
+            ];
+        });
+
+        return response()->json([
+            'status' => true,
+            'teacher' => [
+                'id' => $teacher->id ?? null,
+                'name' => $teacherName,
+                'email' => $teacher->email ?? null,
+                'photo' => $teacher->profile->photo ?? null
+            ],
+            'student_count' => $students->count(),
+            'students' => $students,
+        ], 200);
+    }
+
+    public function changeTeacher(Request $request, $id)
+    {
+        // Validate input
+        $validateTeacher = Validator::make(
+            $request->all(),
+            [
+                'teacher_id' => 'required|integer|exists:teachers,id',
             ]
-        ]);
+        );
+
+        if ($validateTeacher->fails()) {
+            return response()->json([
+                'status' => false,
+                'error' => $validateTeacher->errors()->all(),
+            ], 422);
+        }
+
+        // Find the section
+        $section = Section::find($id);
+        if (!$section) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Section not found',
+            ], 404);
+        }
+        if (Section::where('class_id', $section->class_id)
+            ->where('teacher_id', $request->teacher_id)
+            ->where('id', '!=', $id)  // Exclude the current section
+            ->exists()
+        ) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This teacher is already assigned to another section in this class.',
+            ], 422);
+        }
+
+        try {
+            // Update the teacher for the section
+            $section->update([
+                'teacher_id' => $request->teacher_id,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Teacher updated successfully',
+            ], 200);
+        } catch (\Exception $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to update teacher',
+            ], 500);
+        }
     }
 }
