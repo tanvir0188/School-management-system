@@ -158,8 +158,8 @@
                 let password = $('#password').val().trim();
                 let username = $('#name').val().trim();
                 let studentId = $('#studentId').val().trim();
-                let className = $('#className').val().trim();
-                let section = $('#section').val().trim();
+                let className = $('#className').val();
+                let section = $('#section').val();
                 let adminToken = localStorage.getItem(
                     "admin_token"); // Retrieve admin token from localStorage
 

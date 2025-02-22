@@ -40,7 +40,7 @@ function generateCards(classes) {
 
             let cardHtml = `
                 <div class="col-lg-3 col-md-6 col-12 mb-4">
-                    <a href="/admin/section/${classData.class_name}/${section.section_name}/${section.section_id}" class="card-link">
+                    <a href="/admin/section/${section.class_id}/${classData.class_name}/${section.section_name}/${section.section_id}" class="card-link">
                         <div class="card">
                             <span class="mask bg-secondary hover-effect opacity-10 border-radius-lg"></span>
                             <div class="card-body px-3 py-2 position-relative">

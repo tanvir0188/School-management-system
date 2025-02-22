@@ -17,7 +17,7 @@
         @section('page-title', '')
         @include('components.navbar')
         <div class="container-fluid py-4">
-            <div class="row my-4">
+            <div class="row mt-4">
                 <div class="col-lg-8 mb-md-2 mb-2">
                     <div class="card">
                         <div id="teacherInfo" class="card-body"></div>
@@ -56,17 +56,18 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
+            <button class="btn btn-primary" id="addStudentButton">Add Student</button>
         </div>
 
         @include('admin.section-teacher-modal')
-
-
-
+        @include('admin.update-section-class-modal')
 
     </main>
     @include('components.admin-scripts')
     <script src="{{ asset('assets/js/ajax-functions/manageSection.js') }}"></script>
+    <script src="{{ asset('assets/js/ajax-functions/manageStudentInSection.js') }}"></script>
     @include('components.admin-auth-redirect')
 
     <script src="{{ asset('assets/js/public-ajax-functions/toastr.js') }}"></script>

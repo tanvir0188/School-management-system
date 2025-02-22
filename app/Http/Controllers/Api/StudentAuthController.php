@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -88,6 +89,24 @@ class StudentAuthController extends Controller
         ], 200);
     }
 
+    public function index()
+    {
+        $students = Student::all()->makeHidden(['password', 'created_at', 'updated_at', 'class_id', 'sec_id']);
+
+        if ($students->isNotEmpty()) {
+            return response()->json([
+                'status' => true,
+                'data' => $students,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'No students found',
+        ], 404);
+    }
+
+
     public function search(Request $request)
     {
         // Validate the request
@@ -114,6 +133,62 @@ class StudentAuthController extends Controller
             'status' => true,
             'message' => 'Students retrieved successfully',
             'data' => $students,
+        ], 200);
+    }
+
+    public function removeFromSection($id)
+    {
+        $student = Student::find($id);
+        if ($student) {
+            $student->sec_id = null;
+
+            $student->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'Student removed successfully',
+            ], 200);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'Student not found',
+        ], 404);
+    }
+
+    public function updateStudentSectionAndClass(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'class_id' => 'required|integer|exists:classes,id',
+            'sec_id' => [
+                'required',
+                'integer',
+                'exists:sections,id',
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()->all(),
+            ], 400);
+        }
+
+        $student = Student::find($id);
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student not found',
+            ], 404);
+        }
+
+        $student->class_id = $request->class_id;
+        $student->sec_id = $request->sec_id;
+        $student->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Student section and class updated successfully',
+            'student' => $student,
         ], 200);
     }
 }

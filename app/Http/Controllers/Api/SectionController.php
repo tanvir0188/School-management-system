@@ -259,6 +259,7 @@ class SectionController extends Controller
 
                 // Add section details to the result
                 $result[$class->id]['sections'][] = [
+                    'class_id' => $class->id,
                     'section_name' => $section->name,
                     'section_id' => $section->id,
                     'teacher_id' => $section->teacher->id ?? null,

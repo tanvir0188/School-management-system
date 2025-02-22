@@ -82,9 +82,9 @@ class AdminAuthController extends Controller
                 'email' => 'required|email|unique:students',
                 'password' => 'required|min:8',
                 'student_id' => 'required|unique:students',
-                'class_id' => 'required|integer|exists:classes,id',
+                'class_id' => 'nullable|integer|exists:classes,id',
                 'sec_id' => [
-                    'required',
+                    'nullable',
                     'integer',
                     'exists:sections,id',
                     function ($attribute, $value, $fail) use ($request) {
