@@ -30,6 +30,38 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.teachers') ? 'active' : '' }}" href="{{ route('admin.teachers') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-chalkboard-teacher" style="color: {{request()->routeIs('admin.teachers') ? 'white':'black'}};"></i>
+            </div>
+            <span class="nav-link-text ms-1">Teachers</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.students') ? 'active' : '' }}" href="{{ route('admin.students') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              
+              <i class="fas fa-users" style="color: {{request()->routeIs('admin.students') ? 'white':'black'}};"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">Students</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.notices') ? 'active' : '' }}" href="{{ route('admin.notices') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              
+              <i class="fas fa-bell" style="color: {{request()->routeIs('admin.notices') ? 'white':'black'}};"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">Notices</span>
+          </a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.exams-type-management-with-result') ? 'active' : '' }}" href="{{ route('admin.exams-type-management-with-result') }} ">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -63,37 +95,12 @@
 
         
         
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('admin.teachers') ? 'active' : '' }}" href="{{ route('admin.teachers') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fas fa-chalkboard-teacher" style="color: {{request()->routeIs('admin.teachers') ? 'white':'black'}};"></i>
-            </div>
-            <span class="nav-link-text ms-1">Teachers</span>
-          </a>
-        </li>
+        
 
         
         
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('admin.students') ? 'active' : '' }}" href="{{ route('admin.students') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              
-              <i class="fas fa-users" style="color: {{request()->routeIs('admin.students') ? 'white':'black'}};"></i>
-
-            </div>
-            <span class="nav-link-text ms-1">Students</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('admin.notices') ? 'active' : '' }}" href="{{ route('admin.notices') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              
-              <i class="fas fa-bell" style="color: {{request()->routeIs('admin.notices') ? 'white':'black'}};"></i>
-
-            </div>
-            <span class="nav-link-text ms-1">Notices</span>
-          </a>
-        </li>
+        
+        
 
        
         
