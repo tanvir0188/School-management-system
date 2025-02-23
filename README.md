@@ -1,66 +1,199 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# School Management
 
-## About Laravel
+A Laravel school management app. Every server side logic has been created using RESTful APIs and implemented in the front-end using ajax.
+## Key Features:
+### Admin panel:
+- Dynamic Dashboard System
+- Teacher and student registration
+- Section and class management
+- Exams and results management
+- Making Announcements
+- Proper searching and pagination system for every list
+### Teacher Panel:
+- Dynamic Dashboard featuring teacher's designated sections
+- Making Announcements for their separate sections
+- Profile create and edit
+### Student Panel:
+- Can see their appointed teacher, section, class and total students
+- Class mate list
+- School and section Announcements
+- Profile create and edit
+## Deployment
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+To deploy this project run, make sure to install XAMPP and create a database for this project. Go to .env and set the name of the database.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+  php artisan serve
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## 🛠 Technology used
+Javascript, HTML, CSS, PHP(Laravel), Bootstrap 5, Ajax, RESTful API, Postman(for api testing)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Admin Panel
 
-### Premium Partners
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/1.png?raw=true)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Dashboard
+Admin can manage the sections through this dynamic dashboard.
 
-## Contributing
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/2.png?raw=true)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Section management
 
-## Code of Conduct
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/3.png?raw=true)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Teacher and students can be changed.
 
-## Security Vulnerabilities
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/4.png?raw=true)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/5.png?raw=true)
 
-## License
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/6.png?raw=true)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Student List
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/7.png?raw=true)
+
+### Teacher List
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/8.png?raw=true)
+
+### School Announcement list
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/9.png?raw=true)
+
+Announcements can be shown in the same pag below the list.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/10.png?raw=true)
+
+We can use rich text editor to create an announcement. So We can notices that may need complex structure.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/11.png?raw=true)
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/Screenshot%20(191).png?raw=true)
+### Result list
+Exam results can be seen based on exam type.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/12.png?raw=true)
+
+Here we can update the result. we can also search results based on specific type, student subject or mark
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/13.png?raw=true)
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/14.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/15.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/16.png?raw=true)
+
+### Exam list
+We can see all the exams in this page. Updating and deleting can be done here too.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/17.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/18.png?raw=true)
+
+### Teacher register form
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/19.png?raw=true)
+### Student register form
+We can select the class and section or keep it null. Based on the class section list are populated in the drop down list.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/20.png?raw=true)
+
+### Class creation form
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/21.png?raw=true)
+
+### Section creation form
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/22.png?raw=true)
+
+### Exam type form
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/23.png?raw=true)
+
+### Exam creation form
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/24.png?raw=true)
+
+### Result creation form
+When a subject is selected, the only the eligible student list gets loaded in the dropdown list.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/25.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/26.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/admin/27.png?raw=true)
+
+# Teacher Panel
+
+### Login
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/1.png?raw=true)
+### Dashboard
+The sections that are designated to the logged in teacher gets dynamically displayed.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/2.png?raw=true)
+
+Teacher can go to any section by clicking them
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/3.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/4.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/5.png?raw=true)
+
+Teacher can make or update announcements that are reserved for particular sections.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/6.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/7.png?raw=true)
+### School Announcements
+Can see the announcements made by the admin
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/8.png?raw=true)
+### Profile creation
+
+Teacher can create or edit their own Profile
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/9.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/10.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/11.png?raw=true)
+
+For editing
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/teacher/12.png?raw=true)
+
+# Student Panel
+### Student Login
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/1.png?raw=true)
+### Dashboard
+Student can see their designated class, section and the appointed class teacher.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/2.png?raw=true)
+
+### Teacher list
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/3.png?raw=true)
+### Announcements
+Students can see both school announcements made by the admin and their appointed section's teacher.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/4.png?raw=true)
+
+#### School Notice
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/5.png?raw=true)
+
+#### Section Notice
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/6.png?raw=true)
+
+### Classmates
+Students from the same section.
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/7.png?raw=true)
+
+### Exam and results
+Students previous and pending exams. This page get's dynamically displayed by the students.
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/8.png?raw=true)
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/9.png?raw=true)
+
+### Student Profile
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/10.png?raw=true)
+
+Students can create new profile and edit existing profile
+
+![App Screenshot](https://github.com/tanvir0188/School-management-system/blob/main/Demo/student/11.png?raw=true)
+
+
+
